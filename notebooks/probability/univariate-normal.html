@@ -936,11 +936,11 @@ const thebe_selector_output = ".output, .cell_output"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow_probability.substrates.jax</span> <span class="k">as</span> <span class="nn">tfp</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">reset_defaults</span><span class="p">()</span>
-<span class="c1">#sns.set_context(context=&quot;talk&quot;, font_scale=1)</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">jax</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="o">%</span><span class="k">config</span> InlineBackend.figure_format=&#39;retina&#39;
 
@@ -954,7 +954,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">distributions</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">tfp</span><span class="o">.</span><span class="n">distributions</span>
 </pre></div>
 </div>
 </div>
@@ -967,7 +967,10 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Normal(loc: 0.0, scale: 1.0)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:absl:No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;tfp.distributions.Normal &#39;Normal&#39; batch_shape=[] event_shape=[] dtype=float32&gt;
 </pre></div>
 </div>
 </div>
@@ -976,12 +979,12 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Properties of RV<a class="headerlink" href="#properties-of-rv" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">mean</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(0., dtype=float32)
 </pre></div>
 </div>
 </div>
@@ -993,7 +996,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(0.)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(0., dtype=float32)
 </pre></div>
 </div>
 </div>
@@ -1005,31 +1008,31 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(1.)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(1., dtype=float32)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">stddev</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">stddev</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(1.)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(1., dtype=float32)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">arg_constraints</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;loc&#39;: Real(), &#39;scale&#39;: GreaterThan(lower_bound=0.0)}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(1.4189385, dtype=float32)
 </pre></div>
 </div>
 </div>
@@ -1039,7 +1042,8 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Drawing samples<a class="headerlink" href="#drawing-samples" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">normal</span><span class="o">.</span><span class="n">sample</span><span class="p">([</span><span class="mi">1000</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">normal</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">seed</span> <span class="o">=</span> <span class="n">key</span><span class="p">,</span> <span class="n">sample_shape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1051,7 +1055,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x15e71b5e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x1afdc6d00&gt;
 </pre></div>
 </div>
 <img alt="../../_images/univariate-normal_11_1.png" src="../../_images/univariate-normal_11_1.png" />
@@ -1064,7 +1068,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x15ea847c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x1afe60280&gt;
 </pre></div>
 </div>
 <img alt="../../_images/univariate-normal_12_1.png" src="../../_images/univariate-normal_12_1.png" />
@@ -1075,7 +1079,12 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Finding pdf at a given point<a class="headerlink" href="#finding-pdf-at-a-given-point" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">]))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="mf">1.</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(-1.4189385, dtype=float32)
 </pre></div>
 </div>
 </div>
@@ -1085,9 +1094,9 @@ const thebe_selector_output = ".output, .cell_output"
 <h1>Plotting pdf over given range<a class="headerlink" href="#plotting-pdf-over-given-range" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">5.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
-<span class="n">pdf_x</span> <span class="o">=</span> <span class="n">normal</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+<span class="n">pdf_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">normal</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1117,7 +1126,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x15ed35670&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1b04bb850&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/univariate-normal_19_1.png" src="../../_images/univariate-normal_19_1.png" />
@@ -1125,102 +1134,13 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perplexity</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="n">normal</span><span class="o">.</span><span class="n">entropy</span><span class="p">())</span>
+<span class="n">perplexity</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;_batch_shape&#39;,
- &#39;_event_shape&#39;,
- &#39;_extended_shape&#39;,
- &#39;_get_checked_instance&#39;,
- &#39;_log_normalizer&#39;,
- &#39;_mean_carrier_measure&#39;,
- &#39;_natural_params&#39;,
- &#39;_validate_args&#39;,
- &#39;_validate_sample&#39;,
- &#39;arg_constraints&#39;,
- &#39;batch_shape&#39;,
- &#39;cdf&#39;,
- &#39;entropy&#39;,
- &#39;enumerate_support&#39;,
- &#39;event_shape&#39;,
- &#39;expand&#39;,
- &#39;has_enumerate_support&#39;,
- &#39;has_rsample&#39;,
- &#39;icdf&#39;,
- &#39;loc&#39;,
- &#39;log_prob&#39;,
- &#39;mean&#39;,
- &#39;perplexity&#39;,
- &#39;rsample&#39;,
- &#39;sample&#39;,
- &#39;sample_n&#39;,
- &#39;scale&#39;,
- &#39;set_default_validate_args&#39;,
- &#39;stddev&#39;,
- &#39;support&#39;,
- &#39;variance&#39;]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">support</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Real()
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(1.4189)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(1.4189)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(2.1121)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normal</span><span class="o">.</span><span class="n">perplexity</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(4.1327)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DeviceArray(4.132731, dtype=float32)
 </pre></div>
 </div>
 </div>
