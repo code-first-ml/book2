@@ -5,17 +5,25 @@ parts:
     chapters:
       - file: notebooks/introduction/mle_coin
       - file: notebooks/introduction/variational
-  - caption: Probability Basics
+  - caption: Probability
     chapters:
       - file: notebooks/probability/sample-space
       - file: notebooks/probability/random-variable
       - file: notebooks/probability/pmf
-  - caption: Continuous Probability Distributions
-    chapters:
       - file: notebooks/probability/univariate-normal
       - file: notebooks/probability/univariate-normal-expectations
       - file: notebooks/probability/mvn-introduction
       - file: notebooks/probability/mvn-marginal
+  - caption: Statistics
+  - caption: PGM
+  - caption: Information Theory
+  - caption: Optimization
+  - caption: Inference Algorithms, Overview
+  - caption: Message Passing
+  - caption: Variational Inference
+  - caption: Monte Carlo Inference
+  - caption: MCMC
+  - caption: Sequential Monte Carlo
   - caption: Bayesian ML
     chapters:
       - file: notebooks/bayesian_ml/2021-03-23-bayesian-ml
