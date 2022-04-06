@@ -50,9 +50,9 @@ parts:
       - file: notebooks/bayesian_ml/2021-03-29-bayesian-model-selection
       - file: notebooks/bayesian_ml/2021-03-27-Marginal-Likelihood-2
       - file: notebooks/bayesian_ml/2021-03-31-derivation-of-marginal-likelihood
-  - caption: Sampling from Distributions
-    chapters:
-
+#  - caption: Sampling from Distributions
+#    chapters:
+#
   - caption: Graphical Models
     chapters:
       - file: notebooks/graphical_models/2022-02-15-draw-graphical-models.ipynb
