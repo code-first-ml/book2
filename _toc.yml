@@ -15,15 +15,25 @@ parts:
       - file: notebooks/probability/mvn-introduction
       - file: notebooks/probability/mvn-marginal
   - caption: Statistics
+    chapters:
   - caption: PGM
+    chapters: 
   - caption: Information Theory
+    chapters: 
   - caption: Optimization
+    chapters: 
   - caption: Inference Algorithms, Overview
+    chapters: 
   - caption: Message Passing
+    chapters: 
   - caption: Variational Inference
+    chapters: 
   - caption: Monte Carlo Inference
+    chapters: 
   - caption: MCMC
+    chapters: 
   - caption: Sequential Monte Carlo
+    chapters: 
   - caption: Bayesian ML
     chapters:
       - file: notebooks/bayesian_ml/2021-03-23-bayesian-ml
