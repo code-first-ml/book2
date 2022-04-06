@@ -4,7 +4,6 @@ parts:
   - caption: Introduction
     chapters:
       - file: notebooks/introduction/mle_coin
-      - file: notebooks/introduction/variational
   - caption: Probability
     chapters:
       - file: notebooks/probability/sample-space
@@ -14,26 +13,36 @@ parts:
       - file: notebooks/probability/univariate-normal-expectations
       - file: notebooks/probability/mvn-introduction
       - file: notebooks/probability/mvn-marginal
-  - caption: Statistics
-    chapters:
-  - caption: PGM
-    chapters: 
-  - caption: Information Theory
-    chapters: 
-  - caption: Optimization
-    chapters: 
-  - caption: Inference Algorithms, Overview
-    chapters: 
-  - caption: Message Passing
-    chapters: 
+#  - caption: Statistics
+#    chapters:
+#  - caption: PGM
+#    chapters: 
+#  - caption: Information Theory
+#    chapters: 
+#  - caption: Optimization
+#    chapters: 
+#  - caption: Inference Algorithms, Overview
+#    chapters: 
+#  - caption: Message Passing
+#    chapters: 
   - caption: Variational Inference
     chapters: 
+      - file: notebooks/introduction/variational
   - caption: Monte Carlo Inference
     chapters: 
+      - file: notebooks/sampling/monte-carlo
   - caption: MCMC
     chapters: 
-  - caption: Sequential Monte Carlo
-    chapters: 
+      - file: notebooks/sampling/rejection-sampling-lr
+      - file: notebooks/sampling/Metropolis-Hastings
+      - file: notebooks/sampling/2021-03-10-importance-sampling
+      - file: notebooks/sampling/2021-03-10-rejection-sampling
+      - file: notebooks/sampling/2022-02-04-sampling-normal.ipynb
+      - file: notebooks/sampling/2020-04-16-inverse-transform.ipynb
+      - file: notebooks/sampling/2014-05-01-gibbs-sampling.ipynb
+      - file: notebooks/sampling/2014-07-01-mcmc_coins.ipynb
+#  - caption: Sequential Monte Carlo
+#    chapters: 
   - caption: Bayesian ML
     chapters:
       - file: notebooks/bayesian_ml/2021-03-23-bayesian-ml
@@ -43,15 +52,7 @@ parts:
       - file: notebooks/bayesian_ml/2021-03-31-derivation-of-marginal-likelihood
   - caption: Sampling from Distributions
     chapters:
-      - file: notebooks/sampling/monte-carlo
-      - file: notebooks/sampling/rejection-sampling-lr
-      - file: notebooks/sampling/Metropolis-Hastings
-      - file: notebooks/sampling/2021-03-10-importance-sampling
-      - file: notebooks/sampling/2021-03-10-rejection-sampling
-      - file: notebooks/sampling/2022-02-04-sampling-normal.ipynb
-      - file: notebooks/sampling/2020-04-16-inverse-transform.ipynb
-      - file: notebooks/sampling/2014-05-01-gibbs-sampling.ipynb
-      - file: notebooks/sampling/2014-07-01-mcmc_coins.ipynb
+
   - caption: Graphical Models
     chapters:
       - file: notebooks/graphical_models/2022-02-15-draw-graphical-models.ipynb
