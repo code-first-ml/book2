@@ -146,15 +146,10 @@ const thebe_selector_output = ".output, .cell_output"
    MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../introduction/variational.html">
-   Variational Inference from scratch in JAX
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Probability Basics
+  Probability
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -173,13 +168,6 @@ const thebe_selector_output = ".output, .cell_output"
    Probability Mass Function (PMF)
   </a>
  </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Continuous Probability Distributions
- </span>
-</p>
-<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../probability/univariate-normal.html">
    Properties of RV
@@ -203,39 +191,19 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Bayesian ML
+  Variational Inference
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
-   Bayesian ML: Fundamentals
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
-   Bayesian model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
-   Marginal likelihood
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
-   Marginal likelihood for Bayesian linear regression
+  <a class="reference internal" href="../introduction/variational.html">
+   Variational Inference from scratch in JAX
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Sampling from Distributions
+  MCMC
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -277,6 +245,38 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">
    Coin tosses and MCMC
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Bayesian ML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
+   Bayesian ML: Fundamentals
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
+   Bayesian linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
+   Bayesian model selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
+   Marginal likelihood
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
+   Marginal likelihood for Bayesian linear regression
   </a>
  </li>
 </ul>
@@ -1075,32 +1075,32 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="a-quick-wrap-up-for-bayesian-linear-regression-blr">
 <h2>A quick wrap-up for Bayesian Linear Regression (BLR)<a class="headerlink" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr" title="Permalink to this headline">¶</a></h2>
 <p>We have a feature matrix <span class="math notranslate nohighlight">\(X\)</span> and a target vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. We want to obtain <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> vector in such a way that the error <span class="math notranslate nohighlight">\(\boldsymbol{\epsilon}\)</span> for the following equation is minimum.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-ca3575de-574c-48fa-9940-a28dcd802b41">
-<span class="eqno">(31)<a class="headerlink" href="#equation-ca3575de-574c-48fa-9940-a28dcd802b41" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d07b0d1e-5aea-4bc4-a83d-e4207a17c3d2">
+<span class="eqno">(31)<a class="headerlink" href="#equation-d07b0d1e-5aea-4bc4-a83d-e4207a17c3d2" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 Y = X\boldsymbol{\theta} + \boldsymbol{\epsilon}
 \end{equation}\]</div>
 <p>Prior PDF for <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d173def5-67c2-4941-aae7-6ccb8c7db15b">
-<span class="eqno">(32)<a class="headerlink" href="#equation-d173def5-67c2-4941-aae7-6ccb8c7db15b" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-267655b8-37da-4b6e-8f09-a9b0e20f00d0">
+<span class="eqno">(32)<a class="headerlink" href="#equation-267655b8-37da-4b6e-8f09-a9b0e20f00d0" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 p(\boldsymbol{\theta}) \sim \mathcal{N}(\mathbf{m}_0, S_0)
 \end{equation}\]</div>
 <p>Where <span class="math notranslate nohighlight">\(S_0\)</span> is prior covariance matrix, and <span class="math notranslate nohighlight">\(\mathbf{m}_0\)</span> is prior mean.</p>
 <p>Posterier PDF can be given as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9d814c6a-688f-4a2a-9987-a9911f29b2c8">
-<span class="eqno">(33)<a class="headerlink" href="#equation-9d814c6a-688f-4a2a-9987-a9911f29b2c8" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-86f62790-a593-41e8-8cc9-9f538eeb9ec1">
+<span class="eqno">(33)<a class="headerlink" href="#equation-86f62790-a593-41e8-8cc9-9f538eeb9ec1" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 p(\boldsymbol{\theta}|X,\mathbf{y}) \sim \mathcal{N}(\boldsymbol{\theta} | \mathbf{m}_n, S_n) \\
 S_n = (S_0^{-1} + \sigma_{mle}^{-2}X^TX) \\
 \mathbf{m}_n = S_n(S_0^{-1}\mathbf{m}_0+\sigma_{mle}^{-2}X^T\mathbf{y})
 \end{equation}\]</div>
 <p>Maximum likelihood estimation of <span class="math notranslate nohighlight">\(\sigma\)</span> can be calculated as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d6dc63f6-3688-414d-9455-2f7037bc0c2e">
-<span class="eqno">(34)<a class="headerlink" href="#equation-d6dc63f6-3688-414d-9455-2f7037bc0c2e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-37e8de9c-0b8d-4cec-b75d-f063a330f046">
+<span class="eqno">(34)<a class="headerlink" href="#equation-37e8de9c-0b8d-4cec-b75d-f063a330f046" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 \theta_{mle} = (X^TX)^{-1}X^T\mathbf{y} \\
 \sigma_{mle} = ||\mathbf{y} - X\boldsymbol{\theta}_{mle}||
 \end{equation}\]</div>
 <p>Finally, predicted mean <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}_{mean}\)</span> and predicted covariance matrix <span class="math notranslate nohighlight">\(\hat{Y}_{cov}\)</span> can be given as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9904f874-a0b1-4273-81d0-8c7e926c68e0">
-<span class="eqno">(35)<a class="headerlink" href="#equation-9904f874-a0b1-4273-81d0-8c7e926c68e0" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c27e9fcd-9358-4a35-8b2c-d7197ed0ee59">
+<span class="eqno">(35)<a class="headerlink" href="#equation-c27e9fcd-9358-4a35-8b2c-d7197ed0ee59" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 \hat{\mathbf{y}} \sim \mathcal{N}(\hat{\mathbf{y}}_{mean}, \hat{\mathbf{y}}_{cov}) \\
 \hat{\mathbf{y}}_{mean} = X\mathbf{m}_n \\
 \hat{Y}_{cov} = XS_nX^T
@@ -1178,8 +1178,8 @@ S_n = (S_0^{-1} + \sigma_{mle}^{-2}X^TX) \\
 <div class="section" id="creating-visualizing-dataset">
 <h2>Creating &amp; visualizing dataset<a class="headerlink" href="#creating-visualizing-dataset" title="Permalink to this headline">¶</a></h2>
 <p>To start with, let’s create a random dataset with degree 3 polynomial function with some added noise.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-70d5ee1b-8cd1-4542-8616-391faaf1b966">
-<span class="eqno">(36)<a class="headerlink" href="#equation-70d5ee1b-8cd1-4542-8616-391faaf1b966" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-b2cb31ae-ace4-4fbd-a71d-461bad147fce">
+<span class="eqno">(36)<a class="headerlink" href="#equation-b2cb31ae-ace4-4fbd-a71d-461bad147fce" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 \end{equation}\]</div>
 <div class="cell docutils container">

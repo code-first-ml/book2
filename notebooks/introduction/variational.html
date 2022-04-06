@@ -88,8 +88,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Sample Space" href="../probability/sample-space.html" />
-    <link rel="prev" title="MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss" href="mle_coin.html" />
+    <link rel="next" title="Simple rejection sampling" href="../sampling/rejection-sampling-lr.html" />
+    <link rel="prev" title="Multivariate Normal Distribution: Marginals" href="../probability/mvn-marginal.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -138,21 +138,16 @@ const thebe_selector_output = ".output, .cell_output"
   Introduction
  </span>
 </p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="mle_coin.html">
    MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Variational Inference from scratch in JAX
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Probability Basics
+  Probability
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -171,13 +166,6 @@ const thebe_selector_output = ".output, .cell_output"
    Probability Mass Function (PMF)
   </a>
  </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Continuous Probability Distributions
- </span>
-</p>
-<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../probability/univariate-normal.html">
    Properties of RV
@@ -201,39 +189,19 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Bayesian ML
+  Variational Inference
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
-   Bayesian ML: Fundamentals
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
-   Bayesian model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
-   Marginal likelihood
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
-   Marginal likelihood for Bayesian linear regression
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Variational Inference from scratch in JAX
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Sampling from Distributions
+  MCMC
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -275,6 +243,38 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">
    Coin tosses and MCMC
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Bayesian ML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
+   Bayesian ML: Fundamentals
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
+   Bayesian linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
+   Bayesian model selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
+   Marginal likelihood
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
+   Marginal likelihood for Bayesian linear regression
   </a>
  </li>
 </ul>
@@ -1323,17 +1323,17 @@ and distribution_b type Normal
             
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="mle_coin.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../probability/mvn-marginal.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss</p>
+            <p class="prev-next-title">Multivariate Normal Distribution: Marginals</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../probability/sample-space.html" title="next page">
+    <a class='right-next' id="next-link" href="../sampling/rejection-sampling-lr.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Sample Space</p>
+        <p class="prev-next-title">Simple rejection sampling</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

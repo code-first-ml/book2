@@ -146,15 +146,10 @@ const thebe_selector_output = ".output, .cell_output"
    MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../introduction/variational.html">
-   Variational Inference from scratch in JAX
-  </a>
- </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Probability Basics
+  Probability
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -173,13 +168,6 @@ const thebe_selector_output = ".output, .cell_output"
    Probability Mass Function (PMF)
   </a>
  </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Continuous Probability Distributions
- </span>
-</p>
-<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="../probability/univariate-normal.html">
    Properties of RV
@@ -203,39 +191,19 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Bayesian ML
+  Variational Inference
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
-   Bayesian ML: Fundamentals
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
-   Bayesian model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
-   Marginal likelihood
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
-   Marginal likelihood for Bayesian linear regression
+  <a class="reference internal" href="../introduction/variational.html">
+   Variational Inference from scratch in JAX
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Sampling from Distributions
+  MCMC
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -277,6 +245,38 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">
    Coin tosses and MCMC
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Bayesian ML
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
+   Bayesian ML: Fundamentals
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
+   Bayesian linear regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
+   Bayesian model selection
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
+   Marginal likelihood
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
+   Marginal likelihood for Bayesian linear regression
   </a>
  </li>
 </ul>
@@ -1133,16 +1133,16 @@ X_t = \sum\limits_{i=1}^{p}\phi_iX_{t-i} + \epsilon_t
 <div class="section" id="characteristic-equation-and-unit-root">
 <h3>Characteristic equation and unit root<a class="headerlink" href="#characteristic-equation-and-unit-root" title="Permalink to this headline">¶</a></h3>
 <p>AutoRegressive(1) model</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c5a138dc-a870-4f6a-870d-664aca908ae1">
-<span class="eqno">(39)<a class="headerlink" href="#equation-c5a138dc-a870-4f6a-870d-664aca908ae1" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-266fbc23-e5a1-46fd-b266-8060680b4c68">
+<span class="eqno">(39)<a class="headerlink" href="#equation-266fbc23-e5a1-46fd-b266-8060680b4c68" title="Permalink to this equation">¶</a></span>\[\begin{align}
 X_t - \phi_1X_{t-1} &amp;= a_t \\
 (1-\phi_1B)X_t &amp;= a_t \\
 \text{Char. eq.}\\
 1 - \phi_1Z &amp;= 0
 \end{align}\]</div>
 <p>AutoRegressive(2) model</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d9fbc138-f67f-4ff0-9c17-1ea42c9ac701">
-<span class="eqno">(40)<a class="headerlink" href="#equation-d9fbc138-f67f-4ff0-9c17-1ea42c9ac701" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-cc36b813-7d30-446a-b3ca-7f8d086c5ba6">
+<span class="eqno">(40)<a class="headerlink" href="#equation-cc36b813-7d30-446a-b3ca-7f8d086c5ba6" title="Permalink to this equation">¶</a></span>\[\begin{align}
 X_t - \phi_1X_{t-1} - \phi_2X_{t-2}&amp;= a_t \\
 X_t- \phi_1 BX_t -\phi_2 B^2 X_t &amp;=   a_t \\
 X_t\left[ 1 - \phi_1 B - \phi_2 B^2  \right] &amp;= a_t \\
