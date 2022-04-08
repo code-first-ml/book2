@@ -1381,6 +1381,14 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">neg_log_prior</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">prior_dist</span><span class="p">)</span> <span class="o">+</span> <span class="n">neg_log_likelihood</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grad_loss</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">joint_neg_log_prior_log_likelihood</span><span class="p">)</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optax</span><span class="o">.</span><span class="n">sgd</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
 
@@ -1484,7 +1492,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1318a1fa0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/mle_coin_44_1.png" src="../../_images/mle_coin_44_1.png" />
+<img alt="../../_images/mle_coin_45_1.png" src="../../_images/mle_coin_45_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1504,7 +1512,7 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1319f87c0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/mle_coin_45_1.png" src="../../_images/mle_coin_45_1.png" />
+<img alt="../../_images/mle_coin_46_1.png" src="../../_images/mle_coin_46_1.png" />
 </div>
 </div>
 </div>
@@ -1608,7 +1616,7 @@ WARNING:root:The use of `check_types` is deprecated and does not have any effect
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x131af5790&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/mle_coin_53_1.png" src="../../_images/mle_coin_53_1.png" />
+<img alt="../../_images/mle_coin_54_1.png" src="../../_images/mle_coin_54_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1628,7 +1636,7 @@ WARNING:root:The use of `check_types` is deprecated and does not have any effect
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/mle_coin_54_0.png" src="../../_images/mle_coin_54_0.png" />
+<img alt="../../_images/mle_coin_55_0.png" src="../../_images/mle_coin_55_0.png" />
 </div>
 </div>
 <p>TODO</p>
