@@ -879,20 +879,20 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span> <span class="n">Plots</span>
-<span class="n">theme</span><span class="p">(</span><span class="ss">:default</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Plots</span><span class="w"></span>
+<span class="n">theme</span><span class="p">(</span><span class="ss">:default</span><span class="p">)</span><span class="w"></span>
 
-<span class="k">using</span> <span class="n">LinearAlgebra</span>
-<span class="k">using</span> <span class="n">LaTeXStrings</span>
+<span class="k">using</span><span class="w"> </span><span class="n">LinearAlgebra</span><span class="w"></span>
+<span class="k">using</span><span class="w"> </span><span class="n">LaTeXStrings</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="mi">20</span><span class="p">;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">8</span><span class="o">*</span><span class="p">(</span><span class="mf">0.5</span><span class="o">.-</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">));</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">seriestype</span> <span class="o">=</span> <span class="ss">:scatter</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Dataset&quot;</span><span class="p">,</span> <span class="n">xlabel</span> <span class="o">=</span> <span class="s">&quot;X&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span> <span class="s">&quot;Y&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;Noisy dataset&quot;</span><span class="p">,</span> <span class="n">legend</span> <span class="o">=</span> <span class="ss">:outertopright</span><span class="p">)</span>
-<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">seriestype</span> <span class="o">=</span> <span class="ss">:line</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;True relationship&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="o">:</span><span class="mi">20</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">8</span><span class="o">*</span><span class="p">(</span><span class="mf">0.5</span><span class="o">.-</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">));</span><span class="w"></span>
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">seriestype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:scatter</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Dataset&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xlabel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;Noisy dataset&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">legend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:outertopright</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">seriestype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:line</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;True relationship&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="w"> </span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -901,9 +901,9 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span> <span class="n">error</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="n">err</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">y</span> <span class="o">.-</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">.-</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">.*</span> <span class="n">x</span><span class="p">))</span>
-<span class="k">end</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">error</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="n">err</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">.-</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">.*</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -915,7 +915,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="o">:</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">7</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">5</span><span class="o">:</span><span class="mf">0.1</span><span class="o">:</span><span class="mi">7</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -927,7 +927,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="o">.</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">error</span><span class="o">.</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">])</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -941,8 +941,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">a</span><span class="o">&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="n">argmin_b</span><span class="p">,</span> <span class="n">argmin_a</span> <span class="o">=</span> <span class="kt">Tuple</span><span class="p">(</span><span class="n">argmin</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">a</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"></span>
+<span class="n">argmin_b</span><span class="p">,</span><span class="w"> </span><span class="n">argmin_a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Tuple</span><span class="p">(</span><span class="n">argmin</span><span class="p">(</span><span class="n">z</span><span class="p">))</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -954,7 +954,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">surface</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">z</span> <span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_0&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_1&quot;</span><span class="p">,</span> <span class="n">zlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;Cost~(</span><span class="se">\t</span><span class="s">heta_0, </span><span class="se">\t</span><span class="s">heta_1)&quot;</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">surface</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">zlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;Cost~(</span><span class="se">\t</span><span class="s">heta_0, </span><span class="se">\t</span><span class="s">heta_1)&quot;</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -963,7 +963,7 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">[</span><span class="n">argmin_a</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="n">argmin_b</span><span class="p">]</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">[</span><span class="n">argmin_a</span><span class="p">],</span><span class="w"> </span><span class="n">b</span><span class="p">[</span><span class="n">argmin_b</span><span class="p">]</span><span class="w"></span>
 </pre></div>
 </div>
 </div>
@@ -975,8 +975,8 @@ const thebe_selector_output = ".output, .cell_output"
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">contourf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">a</span><span class="o">&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_0&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_1&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Contour Plot&quot;</span><span class="p">)</span>
-<span class="n">plot!</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="n">argmin_a</span><span class="p">]],</span> <span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="n">argmin_b</span><span class="p">]],</span> <span class="n">seriestype</span><span class="o">=</span><span class="ss">:scatter</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&quot;MLE&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">contourf</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="o">.</span><span class="p">(</span><span class="n">a</span><span class="o">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">),</span><span class="w"> </span><span class="n">xlabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_0&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ylabel</span><span class="o">=</span><span class="sa">L</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">heta_1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Contour Plot&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="n">plot!</span><span class="p">([</span><span class="n">a</span><span class="p">[</span><span class="n">argmin_a</span><span class="p">]],</span><span class="w"> </span><span class="p">[</span><span class="n">b</span><span class="p">[</span><span class="n">argmin_b</span><span class="p">]],</span><span class="w"> </span><span class="n">seriestype</span><span class="o">=</span><span class="ss">:scatter</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="s">&quot;MLE&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="w"></span>
 </pre></div>
 </div>
 </div>

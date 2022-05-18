@@ -980,14 +980,14 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="uniform-distribution">
 <h3>Uniform distribution<a class="headerlink" href="#uniform-distribution" title="Permalink to this headline">¶</a></h3>
 <p>I am pasting the code from vega-vis</p>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">export</span> <span class="k">default</span> <span class="kd">function</span><span class="p">(</span><span class="nx">seed</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// Random numbers using a Linear Congruential Generator with seed value</span>
-  <span class="c1">// Uses glibc values from https://en.wikipedia.org/wiki/Linear_congruential_generator</span>
-  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">seed</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1103515245</span> <span class="o">*</span> <span class="nx">seed</span> <span class="o">+</span> <span class="mf">12345</span><span class="p">)</span> <span class="o">%</span> <span class="mf">2147483647</span><span class="p">;</span>
-    <span class="k">return</span> <span class="nx">seed</span> <span class="o">/</span> <span class="mf">2147483647</span><span class="p">;</span>
-  <span class="p">};</span>
-<span class="p">}</span>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="kd">function</span><span class="p">(</span><span class="nx">seed</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Random numbers using a Linear Congruential Generator with seed value</span><span class="w"></span>
+<span class="w">  </span><span class="c1">// Uses glibc values from https://en.wikipedia.org/wiki/Linear_congruential_generator</span><span class="w"></span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kd">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nx">seed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">1103515245</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">seed</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">12345</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mf">2147483647</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">seed</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">2147483647</span><span class="p">;</span><span class="w"></span>
+<span class="w">  </span><span class="p">};</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
 </pre></div>
 </div>
 <div class="cell docutils container">
