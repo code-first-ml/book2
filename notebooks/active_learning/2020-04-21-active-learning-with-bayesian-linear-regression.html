@@ -1075,32 +1075,32 @@ const thebe_selector_output = ".output, .cell_output"
 <div class="section" id="a-quick-wrap-up-for-bayesian-linear-regression-blr">
 <h2>A quick wrap-up for Bayesian Linear Regression (BLR)<a class="headerlink" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr" title="Permalink to this headline">¶</a></h2>
 <p>We have a feature matrix <span class="math notranslate nohighlight">\(X\)</span> and a target vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. We want to obtain <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> vector in such a way that the error <span class="math notranslate nohighlight">\(\boldsymbol{\epsilon}\)</span> for the following equation is minimum.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2f84b729-2772-48c0-9fc3-47fd47def892">
-<span class="eqno">(31)<a class="headerlink" href="#equation-2f84b729-2772-48c0-9fc3-47fd47def892" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1bbecb48-4c9f-4991-8453-87eff0f3f74e">
+<span class="eqno">(31)<a class="headerlink" href="#equation-1bbecb48-4c9f-4991-8453-87eff0f3f74e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 Y = X\boldsymbol{\theta} + \boldsymbol{\epsilon}
 \end{equation}\]</div>
 <p>Prior PDF for <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-951bf6c9-3382-482b-8e5a-4917f3505d86">
-<span class="eqno">(32)<a class="headerlink" href="#equation-951bf6c9-3382-482b-8e5a-4917f3505d86" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-03b3cc1f-85ce-454e-9c02-aedfce156cbb">
+<span class="eqno">(32)<a class="headerlink" href="#equation-03b3cc1f-85ce-454e-9c02-aedfce156cbb" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 p(\boldsymbol{\theta}) \sim \mathcal{N}(\mathbf{m}_0, S_0)
 \end{equation}\]</div>
 <p>Where <span class="math notranslate nohighlight">\(S_0\)</span> is prior covariance matrix, and <span class="math notranslate nohighlight">\(\mathbf{m}_0\)</span> is prior mean.</p>
 <p>Posterier PDF can be given as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d556d45a-8bd9-438e-9403-4397b4ff2814">
-<span class="eqno">(33)<a class="headerlink" href="#equation-d556d45a-8bd9-438e-9403-4397b4ff2814" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-734aafd6-992f-4ddd-92ee-1bfd0a987d31">
+<span class="eqno">(33)<a class="headerlink" href="#equation-734aafd6-992f-4ddd-92ee-1bfd0a987d31" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 p(\boldsymbol{\theta}|X,\mathbf{y}) \sim \mathcal{N}(\boldsymbol{\theta} | \mathbf{m}_n, S_n) \\
 S_n = (S_0^{-1} + \sigma_{mle}^{-2}X^TX) \\
 \mathbf{m}_n = S_n(S_0^{-1}\mathbf{m}_0+\sigma_{mle}^{-2}X^T\mathbf{y})
 \end{equation}\]</div>
 <p>Maximum likelihood estimation of <span class="math notranslate nohighlight">\(\sigma\)</span> can be calculated as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3c881652-037d-4676-addf-a2396fd252e8">
-<span class="eqno">(34)<a class="headerlink" href="#equation-3c881652-037d-4676-addf-a2396fd252e8" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5f545667-7f95-4fe3-ad1e-f016ac7e65e1">
+<span class="eqno">(34)<a class="headerlink" href="#equation-5f545667-7f95-4fe3-ad1e-f016ac7e65e1" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 \theta_{mle} = (X^TX)^{-1}X^T\mathbf{y} \\
 \sigma_{mle} = ||\mathbf{y} - X\boldsymbol{\theta}_{mle}||
 \end{equation}\]</div>
 <p>Finally, predicted mean <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}_{mean}\)</span> and predicted covariance matrix <span class="math notranslate nohighlight">\(\hat{Y}_{cov}\)</span> can be given as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f2ea2ca7-91ad-47d1-959d-2a6c97cfd1a5">
-<span class="eqno">(35)<a class="headerlink" href="#equation-f2ea2ca7-91ad-47d1-959d-2a6c97cfd1a5" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3ca17d3a-6d38-4d1b-9e76-f68ba581b464">
+<span class="eqno">(35)<a class="headerlink" href="#equation-3ca17d3a-6d38-4d1b-9e76-f68ba581b464" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 \hat{\mathbf{y}} \sim \mathcal{N}(\hat{\mathbf{y}}_{mean}, \hat{\mathbf{y}}_{cov}) \\
 \hat{\mathbf{y}}_{mean} = X\mathbf{m}_n \\
 \hat{Y}_{cov} = XS_nX^T
@@ -1178,8 +1178,8 @@ S_n = (S_0^{-1} + \sigma_{mle}^{-2}X^TX) \\
 <div class="section" id="creating-visualizing-dataset">
 <h2>Creating &amp; visualizing dataset<a class="headerlink" href="#creating-visualizing-dataset" title="Permalink to this headline">¶</a></h2>
 <p>To start with, let’s create a random dataset with degree 3 polynomial function with some added noise.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6d7c5907-02f3-4fdd-bee9-eaa23ca394ee">
-<span class="eqno">(36)<a class="headerlink" href="#equation-6d7c5907-02f3-4fdd-bee9-eaa23ca394ee" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9abdd3c8-7110-4a88-afe5-e79ea95fee73">
+<span class="eqno">(36)<a class="headerlink" href="#equation-9abdd3c8-7110-4a88-afe5-e79ea95fee73" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 \end{equation}\]</div>
 <div class="cell docutils container">
