@@ -145,6 +145,9 @@ parts:
       - file: notebooks/active_learning/2022_01_24_Query_by_Committee.ipynb
       - file: notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression
       - file: notebooks/active_learning/2022-03-06-maximal-expected-error-reduction
+  - caption: NNs for Time Series
+    chapters:
+      - file: notebooks/nn_for_timeseries/2024-06-15-rnn-lstm-transformer.ipynb
 
   - caption: JAX
     chapters:
