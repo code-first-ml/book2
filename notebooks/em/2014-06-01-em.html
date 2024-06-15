@@ -1,37 +1,45 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Programatically understanding Expectation Maximization &#8212; Prog-ML</title>
-    
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -39,6 +47,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -78,8 +87,8 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -88,930 +97,593 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/em/2014-06-01-em';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Recommender Systems in Keras" href="../recommender_systems/2017-12-18-recommend-keras.html" />
     <link rel="prev" title="Signal denoising using RNNs in PyTorch" href="../neural_networks/2018-01-13-denoising.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../../_static/prog-ml.jpg" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Prog-ML</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   Prog-ML
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Introduction
- </span>
-</p>
+    
+    
+    <img src="../../_static/prog-ml.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/prog-ml.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Prog-ML
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../introduction/mle_coin.html">
-   MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/mle_coin.html">MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss</a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Probability
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/sample-space.html">
-   Sample Space
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/random-variable.html">
-   Random Variables
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/pmf.html">
-   Probability Mass Function (PMF)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/univariate-normal.html">
-   Properties of RV
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/univariate-normal-expectations.html">
-   Derivations for moments of univariate normal distribution
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/mvn-introduction.html">
-   Multivariate Normal Distribution: Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/mvn-marginal.html">
-   Multivariate Normal Distribution: Marginals
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/sample-space.html">Sample Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/random-variable.html">Random Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/pmf.html">Probability Mass Function (PMF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal.html">Properties of RV</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal-expectations.html">Derivations for moments of univariate normal distribution</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-introduction.html">Multivariate Normal Distribution: Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-marginal.html">Multivariate Normal Distribution: Marginals</a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Variational Inference
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Inference</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../introduction/variational.html">
-   Variational Inference from scratch in JAX
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/variational.html">Variational Inference from scratch in JAX</a></li>
+
+
+
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  MCMC
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MCMC</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/rejection-sampling-lr.html">
-   Simple rejection sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/Metropolis-Hastings.html">
-   Metropolis Hastings
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2021-03-10-importance-sampling.html">
-   Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2021-03-10-rejection-sampling.html">
-   Rejection sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2022-02-04-sampling-normal.html">
-   Sampling from univariate and multivariate normal distributions using Box-Muller transform
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2020-04-16-inverse-transform.html">
-   Sampling from common distributions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2014-05-01-gibbs-sampling.html">
-   Gibbs sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">
-   Coin tosses and MCMC
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/rejection-sampling-lr.html">Simple rejection sampling</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../sampling/Metropolis-Hastings.html">Metropolis Hastings</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-importance-sampling.html">Importance sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-rejection-sampling.html">Rejection sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2022-02-04-sampling-normal.html">Sampling from univariate and multivariate normal distributions using Box-Muller transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2020-04-16-inverse-transform.html">Sampling from common distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-05-01-gibbs-sampling.html">Gibbs sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">Coin tosses and MCMC</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
-   Bayesian ML: Fundamentals
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
-   Bayesian model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
-   Marginal likelihood
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
-   Marginal likelihood for Bayesian linear regression
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">Bayesian ML: Fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">Bayesian linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">Bayesian model selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">Marginal likelihood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">Marginal likelihood for Bayesian linear regression</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Graphical Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Graphical Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../graphical_models/2022-02-15-draw-graphical-models.html">
-   Drawing graphical models
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../graphical_models/2022-02-15-draw-graphical-models.html">Drawing graphical models</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Mixture Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mixture Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../mixture_models/2022-02-14-GMM.html">
-   GMM learning
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../mixture_models/2022-02-14-GMM.html">GMM learning</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Information Theory
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information Theory</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../information_theory/kl-divergence.html">
-   Understanding KL-Divergence
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../information_theory/kl-divergence.html">Understanding KL-Divergence</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Variational Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../variational_models/2022-02-12-variational-inference.html">
-   Variational Inference
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../variational_models/2022-02-12-variational-inference.html">Variational Inference</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with PyMC
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyMC</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-11-blr-pymc.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-12-logistic-bayesian.html">
-   Bayesian logistic regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-03-16-GP-PyMC3.html">
-   Gaussian process regression in PyMC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-03-17-lls-gp-pymc3.html">
-   Local Lengthscale GP with PyMC
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-11-blr-pymc.html">Bayesian linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-12-logistic-bayesian.html">Bayesian logistic regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-03-16-GP-PyMC3.html">Gaussian process regression in PyMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-03-17-lls-gp-pymc3.html">Local Lengthscale GP with PyMC</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with Pyro
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Pyro</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pyro/2021-08-20-Bayesian.html">
-   Probabilistic Programming in Pyro
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pyro/2022_02_17_pyro_linreg.html">
-   Linear Regression using Pyro
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pyro/2022-02-20-condition-pyro.html">
-   Pyro Conditioning
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2021-08-20-Bayesian.html">Probabilistic Programming in Pyro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022_02_17_pyro_linreg.html">Linear Regression using Pyro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022-02-20-condition-pyro.html">Pyro Conditioning</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with PyTorch
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyTorch</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-09-pytorch-learn-normal.html">
-   Maximum Likelihood Estimation (MLE) for parameters of univariate and multivariate normal distribution in PyTorch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-11-pytorch-learn-normal-map.html">
-   Maximum A-Posteriori (MAP) for parameters of univariate and multivariate normal distribution in PyTorch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-17-ppca.html">
-   Probabilstic PCA using PyTorch distributions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-14-logistic-regression.html">
-   Logistic Regression using PyTorch distributions
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-09-pytorch-learn-normal.html">Maximum Likelihood Estimation (MLE) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-11-pytorch-learn-normal-map.html">Maximum A-Posteriori (MAP) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-17-ppca.html">Probabilstic PCA using PyTorch distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-14-logistic-regression.html">Logistic Regression using PyTorch distributions</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with Tensorflow Probability
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Tensorflow Probability</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-26-tfp-distributions.html">
-   Testing out some distributions in Tensorflow Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-07-coin-toss.html">
-   Coin Toss (MLE, MAP, Fully Bayesian) in TF Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-28-tfp-linear-regression.html">
-   Linear Regression in Tensorflow Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-lr.html">
-   Linear Regression in TF Probability using JointDistributionCoroutineAutoBatched
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-simple-dgm.html">
-   Simple Directed Graphical Models in TF Probability
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-26-tfp-distributions.html">Testing out some distributions in Tensorflow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-07-coin-toss.html">Coin Toss (MLE, MAP, Fully Bayesian) in TF Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-28-tfp-linear-regression.html">Linear Regression in Tensorflow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-lr.html">Linear Regression in TF Probability using JointDistributionCoroutineAutoBatched</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-simple-dgm.html">Simple Directed Graphical Models in TF Probability</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with Julia
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Julia</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_julia/2021-09-01-Hello-Julia-Language.html">
-   Linear Regression from scratch in Julia
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_julia/2021-09-01-Hello-Julia-Language.html">Linear Regression from scratch in Julia</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Gaussian Processes
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Gaussian Processes</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2020-03-26-gp.html">
-   Some experiments in Gaussian Processes Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-15-LLS-GP.html">
-   Local Lengthscale GP
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-15-deep-gp-from-scratch.html">
-   Deep Kernel Learning
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-16-ard-gp.html">
-   Automatic relevance determination (ARD)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-16-GP-vs-DeepGP.html">
-   GP v/s Deep GP on 2d data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2022-02-23-gp_rff.html">
-   Gaussian Processes with Random Fourier Features
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2020-03-29-param-learning.html">
-   Learning Gaussian Process regression parameters using gradient descent
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-09-03-param-learning-sgd.html">
-   Learning Gaussian Process regression parameters using mini-batch stochastic gradient descent
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2020-06-26-gp-understand.html">
-   Understanding Kernels in Gaussian Processes Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/pyro-deep-gp.html">
-   Deep Kernel Learning
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/pyro-binary-classification.html">
-   GP Classification
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-03-26-gp.html">Some experiments in Gaussian Processes Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-15-LLS-GP.html">Local Lengthscale GP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-15-deep-gp-from-scratch.html">Deep Kernel Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-16-ard-gp.html">Automatic relevance determination (ARD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-16-GP-vs-DeepGP.html">GP v/s Deep GP on 2d data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2022-02-23-gp_rff.html">Gaussian Processes with Random Fourier Features</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-03-29-param-learning.html">Learning Gaussian Process regression parameters using gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-09-03-param-learning-sgd.html">Learning Gaussian Process regression parameters using mini-batch stochastic gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-06-26-gp-understand.html">Understanding Kernels in Gaussian Processes Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/pyro-deep-gp.html">Deep Kernel Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/pyro-binary-classification.html">GP Classification</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Linear Regression
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Regression</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../linear_regression/2022_02_21_coordinate_descent_failure.html">
-   Coordinate descent failure example
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_regression/2022_02_21_coordinate_descent_failure.html">Coordinate descent failure example</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Generative Adversarial Networks
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Adversarial Networks</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../gans/2021-05-31-GAN.html">
-   A programming introduction to GANs
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../gans/2021-05-31-GAN.html">A programming introduction to GANs</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Hidden Markov Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hidden Markov Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../hmms/2013-06-01-hmm_simulate.html">
-   HMM Simulation for Unfair Casino Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../hmms/2013-07-01-hmm_continuous.html">
-   HMM Simulation for Continuous HMM
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-06-01-hmm_simulate.html">HMM Simulation for Unfair Casino Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-07-01-hmm_continuous.html">HMM Simulation for Continuous HMM</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Tensor Factorization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tensor Factorization</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-04-19-nmf-out-matrix.html">
-   Out of matrix non-negative matrix factorisation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-04-20-parafac-out-tensor.html">
-   Out of Tensor factorisation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-08-13-mf-autograd-adagrad.html">
-   Adagrad based matrix factorization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-04-21-constrained-nmf-cvx.html">
-   Constrained Non-negative matrix factorisation using CVXPY
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-19-nmf-out-matrix.html">Out of matrix non-negative matrix factorisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-20-parafac-out-tensor.html">Out of Tensor factorisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-08-13-mf-autograd-adagrad.html">Adagrad based matrix factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-21-constrained-nmf-cvx.html">Constrained Non-negative matrix factorisation using CVXPY</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Neural Networks
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Neural Networks</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2020-03-08-keras-neural-non-linear.html">
-   Some Neural Network Classification
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2020-02-28-xor-relu-vector.html">
-   Learning neural network for XOR
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2020-03-02-linear-scratch.html">
-   Neural Networks from scratch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2018-01-13-denoising.html">
-   Signal denoising using RNNs in PyTorch
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-08-keras-neural-non-linear.html">Some Neural Network Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-02-28-xor-relu-vector.html">Learning neural network for XOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-02-linear-scratch.html">Neural Networks from scratch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2018-01-13-denoising.html">Signal denoising using RNNs in PyTorch</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Expectation Maximization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Expectation Maximization</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Programatically understanding Expectation Maximization
-  </a>
- </li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Programatically understanding Expectation Maximization</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Recommender Systems
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Recommender Systems</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../recommender_systems/2017-12-18-recommend-keras.html">
-   Recommender Systems in Keras
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../recommender_systems/2017-12-29-neural-collaborative-filtering.html">
-   Neural Networks for Collaborative Filtering
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-18-recommend-keras.html">Recommender Systems in Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-29-neural-collaborative-filtering.html">Neural Networks for Collaborative Filtering</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Active Learning
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Active Learning</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../active_learning/2018-06-20-active-committee.html">
-   Active Learning
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../active_learning/2022_01_24_Query_by_Committee.html">
-   Query by Committee
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.html">
-   Active Learning with Bayesian Linear Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../active_learning/2022-03-06-maximal-expected-error-reduction.html">
-   Problem with Expected Model Change
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2018-06-20-active-committee.html">Active Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2022_01_24_Query_by_Committee.html">Query by Committee</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.html">Active Learning with Bayesian Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2022-03-06-maximal-expected-error-reduction.html">Problem with Expected Model Change</a></li>
+
+
+
+
+
+
+
+
+
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  JAX
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NNs for Time Series</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../jax/introduction-jax.html">
-   Using PRNG key
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../ml_softwares/2022-02-09-autograd-pytorch-jax.html">
-   Autograd in JAX and PyTorch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../ml_softwares/2017-08-12-linear-regression-adagrad-vs-gd.html">
-   Programatically understanding Adagrad
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../nn_for_timeseries/2024-06-15-rnn-lstm-transformer.html">RNN, LSTM and Transformers</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Appendix 1 - Linear Algebra for ML
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">JAX</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-eigen.html">
-   Eigen values
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-determinant.html">
-   Determinant
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-Positive-semi-definite.html">
-   Positive definiteness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2022-02-11-matrix.html">
-   Matrix as transformation and interpreting low rank matrix
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../jax/introduction-jax.html">Using PRNG key</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2022-02-09-autograd-pytorch-jax.html">Autograd in JAX and PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2017-08-12-linear-regression-adagrad-vs-gd.html">Programatically understanding Adagrad</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Appendix 2 - Stochastic processes
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - Linear Algebra for ML</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-19-stochastic-processes.html">
-   Stochastic processes
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-17-Stationary-Time_Series.html">
-   Stationarity of time-series stochastic process
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-23-Stationarity-stochastic-processes.html">
-   Stationarity of stochastic processes II
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-eigen.html">Eigen values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-determinant.html">Determinant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-Positive-semi-definite.html">Positive definiteness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2022-02-11-matrix.html">Matrix as transformation and interpreting low rank matrix</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  References
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 2 - Stochastic processes</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../references/references.html">
-   References
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-19-stochastic-processes.html">Stochastic processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-17-Stationary-Time_Series.html">Stationarity of time-series stochastic process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-23-Stationarity-stochastic-processes.html">Stationarity of stochastic processes II</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references/references.html">References</a></li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/notebooks/em/2014-06-01-em.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/code-first-ml/book2"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/code-first-ml/book2/issues/new?title=Issue%20on%20page%20%2Fnotebooks/em/2014-06-01-em.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/code-first-ml/book2/edit/main/notebooks/em/2014-06-01-em.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-</div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+<div class="article-header-buttons">
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/code-first-ml/book2/main?urlpath=tree/notebooks/em/2014-06-01-em.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/code-first-ml/book2/blob/main/notebooks/em/2014-06-01-em.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
 
-        </div>
 
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#maximum-likelihood">
-   Maximum Likelihood
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#problem-description">
-   Problem description
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-the-dataset">
-   Creating the dataset
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#completely-observed-case">
-   Completely observed case
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#unseen-data-settings">
-   Unseen data settings
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#step-0-assuming-initial-set-of-parameters">
-     Step 0: Assuming initial set of parameters
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#iteration-1-step-1-e-step">
-     Iteration 1, Step 1 : E-step
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#iteration-1-step-2-m-step">
-     Iteration 1, Step 2: M-step
-    </a>
-   </li>
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/code-first-ml/book2/blob/main/notebooks/em/2014-06-01-em.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
   </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#em-single-iteration">
-   EM single iteration
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#em-procedure">
-   EM procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#results">
-   Results
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
- </li>
-</ul>
+</div>
 
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2/edit/main/notebooks/em/2014-06-01-em.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2/issues/new?title=Issue%20on%20page%20%2Fnotebooks/em/2014-06-01-em.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/em/2014-06-01-em.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Programatically understanding Expectation Maximization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood">Maximum Likelihood</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-description">Problem description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-dataset">Creating the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#completely-observed-case">Completely observed case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unseen-data-settings">Unseen data settings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0-assuming-initial-set-of-parameters">Step 0: Assuming initial set of parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteration-1-step-1-e-step">Iteration 1, Step 1 : E-step</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteration-1-step-2-m-step">Iteration 1, Step 2: M-step</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#em-single-iteration">EM single iteration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#em-procedure">EM procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Programatically understanding Expectation Maximization</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#maximum-likelihood">
-   Maximum Likelihood
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#problem-description">
-   Problem description
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-the-dataset">
-   Creating the dataset
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#completely-observed-case">
-   Completely observed case
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#unseen-data-settings">
-   Unseen data settings
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#step-0-assuming-initial-set-of-parameters">
-     Step 0: Assuming initial set of parameters
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#iteration-1-step-1-e-step">
-     Iteration 1, Step 1 : E-step
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#iteration-1-step-2-m-step">
-     Iteration 1, Step 2: M-step
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#em-single-iteration">
-   EM single iteration
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#em-procedure">
-   EM procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#results">
-   Results
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="programatically-understanding-expectation-maximization">
-<h1>Programatically understanding Expectation Maximization<a class="headerlink" href="#programatically-understanding-expectation-maximization" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="programatically-understanding-expectation-maximization">
+<h1>Programatically understanding Expectation Maximization<a class="headerlink" href="#programatically-understanding-expectation-maximization" title="Permalink to this headline">#</a></h1>
 <blockquote>
 <div><p>Maximize based on what you know, re-estimate!</p>
 </div></blockquote>
@@ -1023,8 +695,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li><p>categories: [ML]</p></li>
 </ul>
 <p>I was recently studying the <a class="reference external" href="http://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">Expectation Maximization</a> algorithm from this well cited <a class="reference external" href="http://ai.stanford.edu/~chuongdo/papers/em_tutorial.pdf">Nature article</a>. To be honest, I found it hard to get all the maths right initially. I had to infact resort to looking up a few forums to get a clear understanding of this algorithm. I decided to take a programming approach to clear up some concepts in this problem. Another reason to do this is the amount of calculations needed in this algorithm (though not difficult, can be time consuming).</p>
-<div class="section" id="maximum-likelihood">
-<h2>Maximum Likelihood<a class="headerlink" href="#maximum-likelihood" title="Permalink to this headline">¶</a></h2>
+<section id="maximum-likelihood">
+<h2>Maximum Likelihood<a class="headerlink" href="#maximum-likelihood" title="Permalink to this headline">#</a></h2>
 <p>We are given two coins- A and B. Both these coins have a certain probability of getting heads. We choose one of the coin at random (with equal probability) and toss it 10 times noting down the heads-tails pattern. We also carefully account which coin was thrown. We repeat this procedure 5 times. The coin tosses observed in this case are show in the figure below in case A.</p>
 <p>Our aim is to determine the probability of getting a head on coin A and likewise for coin B. Intuitively, if we add up the number of heads observed when A was thrown and divide it by the total number of times A was tossed, we woud get this number. This comes from the well known principle of <a class="reference external" href="http://en.wikipedia.org/wiki/Maximum_likelihood">Maximum Likelihood</a>.</p>
 <p><img alt="" src="http://i.stack.imgur.com/mj0nb.gif" /></p>
@@ -1113,9 +785,9 @@ const thebe_selector_output = ".output, .cell_output"
          }
       }
     </script>
-
+    
     <div>
-
+      
     <div name="p0" style="display:block">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAFrlJREFUeJzt3X1QFPfhBvBnPRDQwxci2mpDAiaCQSWeL6AjkZoSwLdY
@@ -1223,7 +895,7 @@ EydOuDoWCcZyIeEuXLhgmVx94sSJOHz4MEJDQ12cikTjNRciEoJHLkQkBMuFiIRguRCRECwXIhKC
 5UJEQrBciEgIlgsRCcFyISIh/g9F0LiTKeglZgAAAABJRU5ErkJggg==
 ">
     </div>
-
+    
     <div name="p0.1" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAF9hJREFUeJzt3X9QFPfBBvBnPZBfp+hFTKsNEUgEg4bkNBIdiZSUKBqN
@@ -1336,7 +1008,7 @@ fvQjLFy40DYPiIeHYm7Kp9vAwyJyiZqaGqhUKqSnp8PDw4PFchdguZBwly9fhkajwYoVK2AwGNDR
 kRAsFyISguVCREKwXIhICJYLEQnxf9hM9oefSKo3AAAAAElFTkSuQmCC
 ">
     </div>
-
+    
     <div name="p0.2" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGBRJREFUeJzt3X9UVGXiBvDnMiA/HEUnsV3dSKEEQ6NG89eRJFpCMs1j
@@ -1450,7 +1122,7 @@ YDQa8fnnn7s7FgnGciHhjh8/bl1c/eGHH8aePXswfvx4N6ci0XjOhYiE4J4LEQnBciEiIVguRCQE
 y4WIhGC5EJEQLBciEoLlQkRCsFyISIj/B46IaGcSSsa5AAAAAElFTkSuQmCC
 ">
     </div>
-
+    
     <div name="p0.3" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGB1JREFUeJzt3XtUFOfBBvBnWBDQ9baKaU1DAiSC8UKyGlGPCNWiEOPl
@@ -1564,7 +1236,7 @@ DIPBgAULFsBms6GpqQmHDx/2diwSjOVCwp06dcq5uPrTTz+NrKwsREVFeTkVicZrLkQkBI9ciEgI
 lgsRCcFyISIhWC5EJATLhYiEYLkQkRAsFyISguVCREL8PzKvoFX2Tck5AAAAAElFTkSuQmCC
 ">
     </div>
-
+    
     <div name="p0.4" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGBlJREFUeJzt3X1UVHXiBvDnMoyAjqaTWmsbJZSD+UKN5tsRYWlJyHw5
@@ -1678,7 +1350,7 @@ covXXnsNd999N+bMmeOYB8TbWzM35dNN4GERuYXVaoVOp8OqVavg7e3NYrkNsFxIuAsXLsBoNGLx
 LBciEoLlQkRCsFyISAiWCxEJwXIhIiFYLkQkxP8BARXGag2P8AIAAAAASUVORK5CYII=
 ">
     </div>
-
+    
     <div name="p0.5" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGCpJREFUeJzt3XtUVHUCB/DvZUAejq9RrLWNFEowNXJ8oK4IS4tC5uOs
@@ -1793,7 +1465,7 @@ KhKNx1yISAhuuRCRECwXIhKC5UJEQrBciEgIlgsRCcFyISIhWC5EJATLhYiE+C/uOs5FjwpkPAAA
 AABJRU5ErkJggg==
 ">
     </div>
-
+    
     <div name="p0.6" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGC1JREFUeJzt3X1QFPfhBvBnORDQ0+j5ktY0JGIi+BaS8wVxQCgpEWJ8
@@ -1908,7 +1580,7 @@ gS5ORaLxmAsRCcEtFyISguVCREKwXIhICJYLEQnBciEiIVguRCQEy4WIhGC5EJEQ/w8/C8wb/X5A
 DgAAAABJRU5ErkJggg==
 ">
     </div>
-
+    
     <div name="p0.7" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGApJREFUeJzt3XtQVOfBBvDnsCCgq9GNmtQ0JEAiGC8kq/E2INQUhRgv
@@ -2022,7 +1694,7 @@ JBjLhYQ7deqUY3L1Z555Brt378aIESM8nIpE4zEXIhKCWy5EJATLhYiEYLkQkRAsFyISguVCREKw
 XIhICJYLEQnBciEiIf4PsVaxV1gPUtAAAAAASUVORK5CYII=
 ">
     </div>
-
+    
     <div name="p0.8" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGCVJREFUeJzt3X9UVGXiBvDnMiA/HERRbNONBFIwVHL87ZEkWlQyzWNG
@@ -2137,7 +1809,7 @@ iEgIHrkQkRAsFyISguVCREKwXIhICJYLEQnBciEiIVguRCQEy4WIhPh/5AmDyxCGnYAAAAAASUVO
 RK5CYII=
 ">
     </div>
-
+    
     <div name="p0.9" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAGEJJREFUeJzt3X9UVGXCB/DvOCA/HEUnUVeTBFIwNGr8gXokWVoU/JWv
@@ -2252,7 +1924,7 @@ wVguJNzZs2fNi6s//fTT2L9/P4KCghycikTjMRciEoJ7LkQkBMuFiIRguRCRECwXIhKC5UJEQrBc
 iEgIlgsRCcFyISIh/h+8mEtuBzRO3gAAAABJRU5ErkJggg==
 ">
     </div>
-
+    
     <div name="p1" style="display:none">
       <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARcAAADbCAYAAABHjtWvAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
 AAALEgAACxIB0t1+/AAAF3RJREFUeJzt3X9UVGXCB/DvZYARGDRHR3t1o4ASFI2afqC+kqxFSv7I
@@ -2363,10 +2035,10 @@ rq4OarUaS5YsgcFggNlsxv79+90diwRjuZBwx44dsy2ufv/992PXrl2IiopycyoSjedciEgI7rkQ
 kRAsFyISguVCREKwXIhICJYLEQnBciEiIVguRCQEy4WIhPg/Y/SnjqGVyQYAAAAASUVORK5CYII=
 ">
     </div>
-
+    
       <b>p:</b> <input type="range" name="p" min="0.0" max="1.0" step="0.1" value="0.0" style="width:350px" onchange="interactUpdate(this.parentNode);">
     </div>
-</div></div>
+    </div></div>
 </div>
 <p>As expected, as we increase <span class="math notranslate nohighlight">\(p\)</span>, there is a higher probability of getting more heads. Now, let us look at the Maximum likelihood problem. Say, we are given that we made <span class="math notranslate nohighlight">\(n\)</span> coin tosses and obtained <span class="math notranslate nohighlight">\(x\)</span> heads. Using this information and the nature of distribution, let us find what value of <span class="math notranslate nohighlight">\(p\)</span> would have most likely resulted in this data.</p>
 <p>If we choose the probability of heads to be <span class="math notranslate nohighlight">\(p\)</span>, the likelihood (probability) of obtaining <span class="math notranslate nohighlight">\(x\)</span> heads in <span class="math notranslate nohighlight">\(n\)</span> throws in our data <span class="math notranslate nohighlight">\(D \)</span> is:
@@ -2380,14 +2052,14 @@ or \)</span><span class="math notranslate nohighlight">\( p = \frac{x}{n}\)</spa
 $<span class="math notranslate nohighlight">\( P (A=head|D) = \frac{\mathrm{heads~observed~when~A~was~thrown}}{\mathrm{times~A~was~thrown}}\)</span><span class="math notranslate nohighlight">\(
 \)</span><span class="math notranslate nohighlight">\( = \frac{24}{24+6} = 0.8\)</span>$
 Similarly, for coin B, we can find this ratio as 0.45.</p>
-</div>
-<div class="section" id="problem-description">
-<h2>Problem description<a class="headerlink" href="#problem-description" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="problem-description">
+<h2>Problem description<a class="headerlink" href="#problem-description" title="Permalink to this headline">#</a></h2>
 <p>Now, we come to the main problem. What if we didn’t note down which coin was thrown in which iteration. Can we still find out the probabilities of heads for the different coins.
 It turns out that we can use the EM algorithm for this task. I would recommend reading the theory in the nature paper before resuming this section. Now, we present the programming route to EM and its different components under this setting.</p>
-</div>
-<div class="section" id="creating-the-dataset">
-<h2>Creating the dataset<a class="headerlink" href="#creating-the-dataset" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creating-the-dataset">
+<h2>Creating the dataset<a class="headerlink" href="#creating-the-dataset" title="Permalink to this headline">#</a></h2>
 <p>A head is labeled as a 1 and a tail as a 0. The five rows correspond to the five set of throws.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2408,9 +2080,9 @@ It turns out that we can use the EM algorithm for this task. I would recommend r
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="completely-observed-case">
-<h2>Completely observed case<a class="headerlink" href="#completely-observed-case" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="completely-observed-case">
+<h2>Completely observed case<a class="headerlink" href="#completely-observed-case" title="Permalink to this headline">#</a></h2>
 <p>As discussed before, if we know which coin was used when, this task reduces to Maximum likelihood.</p>
 <p>The sets of observations corresponding to coin A can be found as:</p>
 <div class="cell docutils container">
@@ -2466,19 +2138,19 @@ It turns out that we can use the EM algorithm for this task. I would recommend r
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="unseen-data-settings">
-<h2>Unseen data settings<a class="headerlink" href="#unseen-data-settings" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="unseen-data-settings">
+<h2>Unseen data settings<a class="headerlink" href="#unseen-data-settings" title="Permalink to this headline">#</a></h2>
 <p>Now, we follow the Step b in the first figure on this page (which is Figure 1 from the Nature article)</p>
-<div class="section" id="step-0-assuming-initial-set-of-parameters">
-<h3>Step 0: Assuming initial set of parameters<a class="headerlink" href="#step-0-assuming-initial-set-of-parameters" title="Permalink to this headline">¶</a></h3>
+<section id="step-0-assuming-initial-set-of-parameters">
+<h3>Step 0: Assuming initial set of parameters<a class="headerlink" href="#step-0-assuming-initial-set-of-parameters" title="Permalink to this headline">#</a></h3>
 <div class="math notranslate nohighlight">
 \[\theta_A^0 = 0.6\]</div>
 <div class="math notranslate nohighlight">
 \[\theta_B^0 = 0.5\]</div>
-</div>
-<div class="section" id="iteration-1-step-1-e-step">
-<h3>Iteration 1, Step 1 : E-step<a class="headerlink" href="#iteration-1-step-1-e-step" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="iteration-1-step-1-e-step">
+<h3>Iteration 1, Step 1 : E-step<a class="headerlink" href="#iteration-1-step-1-e-step" title="Permalink to this headline">#</a></h3>
 <p>Let us take the first group of observation. We have 5 Heads and 5 tails. PMF according to binomial distribution is given by : <span class="math notranslate nohighlight">\({n\choose{k}}p^k(1-p)^{n-k}\)</span>. For coin A we have <span class="math notranslate nohighlight">\(p=\theta^0_A=0.6\)</span> and <span class="math notranslate nohighlight">\(n=10\)</span>. We calculate the <span class="math notranslate nohighlight">\(pmf\)</span> as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2560,9 +2232,9 @@ Coin B Weighted count for tails in observation 1: 2.75
 </div>
 </div>
 <p>We can similarly find out the weigted count in each observation set for both coin A and B. For now, we will pick up the numbers from the paper.</p>
-</div>
-<div class="section" id="iteration-1-step-2-m-step">
-<h3>Iteration 1, Step 2: M-step<a class="headerlink" href="#iteration-1-step-2-m-step" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="iteration-1-step-2-m-step">
+<h3>Iteration 1, Step 2: M-step<a class="headerlink" href="#iteration-1-step-2-m-step" title="Permalink to this headline">#</a></h3>
 <p>We now take the sum of weighted count of heads for both coin A and B. For coin A, we have 21.3 heads and 8.6 tails. Thus, we get the probability of getting a head at the end of this iteration as:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2577,10 +2249,10 @@ Coin B Weighted count for tails in observation 1: 2.75
 </div>
 </div>
 <p>We can find the same quantity for coin B as well. Next, we repeat the same procedure using these latest calculated probabilities of obtaining heads for coins A and B.</p>
-</div>
-</div>
-<div class="section" id="em-single-iteration">
-<h2>EM single iteration<a class="headerlink" href="#em-single-iteration" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="em-single-iteration">
+<h2>EM single iteration<a class="headerlink" href="#em-single-iteration" title="Permalink to this headline">#</a></h2>
 <p>Let us now write a procedure to do a single iteration of the EM algorithm. The function takes in as argument the following:</p>
 <ul class="simple">
 <li><p>priors <span class="math notranslate nohighlight">\(\theta_A\)</span> and <span class="math notranslate nohighlight">\(\theta_B\)</span></p></li>
@@ -2590,7 +2262,7 @@ Coin B Weighted count for tails in observation 1: 2.75
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">em_single</span><span class="p">(</span><span class="n">priors</span><span class="p">,</span> <span class="n">observations</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Performs a single EM step</span>
 <span class="sd">    Arguments</span>
 <span class="sd">    ---------</span>
@@ -2626,9 +2298,9 @@ Coin B Weighted count for tails in observation 1: 2.75
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="em-procedure">
-<h2>EM procedure<a class="headerlink" href="#em-procedure" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="em-procedure">
+<h2>EM procedure<a class="headerlink" href="#em-procedure" title="Permalink to this headline">#</a></h2>
 <p>This procedure calls the single EM iteration untill convergence or some stopping condition. We specificy two stopping conditions and the procedure stops when either condition is met.</p>
 <ul class="simple">
 <li><p>10000 iterations</p></li>
@@ -2652,9 +2324,9 @@ Coin B Weighted count for tails in observation 1: 2.75
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="results">
-<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">#</a></h2>
 <p>Let us run the algorithm for the priors used in the paper</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2711,16 +2383,16 @@ Coin B Weighted count for tails in observation 1: 2.75
 </div>
 </div>
 <p>So EM is still smart enough!</p>
-</div>
-<div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
-<ol class="simple">
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">#</a></h2>
+<ol class="arabic simple">
 <li><p><a class="reference external" href="http://math.stackexchange.com/questions/81004/how-does-expectation-maximization-work-in-coin-flipping-problem">Question on math stack exchange</a></p></li>
 <li><p><a class="reference external" href="http://math.stackexchange.com/questions/25111/how-does-expectation-maximization-work">Another question on math stack exhange</a></p></li>
 </ol>
 <p>If you have any suggestions feel free let me know.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2734,7 +2406,7 @@ Coin B Weighted count for tails in observation 1: 2.75
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./notebooks/em"
         },
         predefinedOutput: true
@@ -2742,44 +2414,118 @@ Coin B Weighted count for tails in observation 1: 2.75
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="../neural_networks/2018-01-13-denoising.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Signal denoising using RNNs in PyTorch</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../neural_networks/2018-01-13-denoising.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Signal denoising using RNNs in PyTorch</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="../recommender_systems/2017-12-18-recommend-keras.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="../recommender_systems/2017-12-18-recommend-keras.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Recommender Systems in Keras</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-            
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By The Jupyter Book community<br/>
-    
-        &copy; Copyright 2022.<br/>
-  </p>
-</footer>
-</main>
-
-
       </div>
-    </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+</div>
 
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood">Maximum Likelihood</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-description">Problem description</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-dataset">Creating the dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#completely-observed-case">Completely observed case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unseen-data-settings">Unseen data settings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-0-assuming-initial-set-of-parameters">Step 0: Assuming initial set of parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteration-1-step-1-e-step">Iteration 1, Step 1 : E-step</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iteration-1-step-2-m-step">Iteration 1, Step 2: M-step</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#em-single-iteration">EM single iteration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#em-procedure">EM procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results">Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

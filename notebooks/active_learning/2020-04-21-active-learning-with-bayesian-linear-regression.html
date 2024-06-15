@@ -1,37 +1,45 @@
 
+
 <!DOCTYPE html>
 
-<html>
+
+<html >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Active Learning with Bayesian Linear Regression &#8212; Prog-ML</title>
-    
-  <link href="../../_static/css/theme.css" rel="stylesheet">
-  <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
-    
-  <link rel="preload" as="script" href="../../_static/js/index.be7d3bbb2ef33a8344ce.js">
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
@@ -39,6 +47,7 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -78,8 +87,8 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -88,1027 +97,638 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Problem with Expected Model Change" href="2022-03-06-maximal-expected-error-reduction.html" />
     <link rel="prev" title="Query by Committee" href="2022_01_24_Query_by_Committee.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="None">
-    
-
-    <!-- Google Analytics -->
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
-
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="../../index.html">
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+      <div class="bd-sidebar-primary bd-sidebar">
         
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
       
-      
-      <img src="../../_static/prog-ml.jpg" class="logo" alt="logo">
-      
-      
-      <h1 class="site-logo" id="site-title">Prog-ML</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../../intro.html">
-   Prog-ML
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Introduction
- </span>
-</p>
+    
+    
+    <img src="../../_static/prog-ml.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/prog-ml.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Prog-ML
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../introduction/mle_coin.html">
-   MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/mle_coin.html">MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss</a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Probability
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/sample-space.html">
-   Sample Space
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/random-variable.html">
-   Random Variables
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/pmf.html">
-   Probability Mass Function (PMF)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/univariate-normal.html">
-   Properties of RV
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/univariate-normal-expectations.html">
-   Derivations for moments of univariate normal distribution
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/mvn-introduction.html">
-   Multivariate Normal Distribution: Introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../probability/mvn-marginal.html">
-   Multivariate Normal Distribution: Marginals
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/sample-space.html">Sample Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/random-variable.html">Random Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/pmf.html">Probability Mass Function (PMF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal.html">Properties of RV</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal-expectations.html">Derivations for moments of univariate normal distribution</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-introduction.html">Multivariate Normal Distribution: Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-marginal.html">Multivariate Normal Distribution: Marginals</a></li>
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Variational Inference
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Inference</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../introduction/variational.html">
-   Variational Inference from scratch in JAX
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../introduction/variational.html">Variational Inference from scratch in JAX</a></li>
+
+
+
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  MCMC
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MCMC</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/rejection-sampling-lr.html">
-   Simple rejection sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/Metropolis-Hastings.html">
-   Metropolis Hastings
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2021-03-10-importance-sampling.html">
-   Importance sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2021-03-10-rejection-sampling.html">
-   Rejection sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2022-02-04-sampling-normal.html">
-   Sampling from univariate and multivariate normal distributions using Box-Muller transform
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2020-04-16-inverse-transform.html">
-   Sampling from common distributions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2014-05-01-gibbs-sampling.html">
-   Gibbs sampling
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">
-   Coin tosses and MCMC
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/rejection-sampling-lr.html">Simple rejection sampling</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../sampling/Metropolis-Hastings.html">Metropolis Hastings</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-importance-sampling.html">Importance sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-rejection-sampling.html">Rejection sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2022-02-04-sampling-normal.html">Sampling from univariate and multivariate normal distributions using Box-Muller transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2020-04-16-inverse-transform.html">Sampling from common distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-05-01-gibbs-sampling.html">Gibbs sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">Coin tosses and MCMC</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">
-   Bayesian ML: Fundamentals
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">
-   Bayesian model selection
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">
-   Marginal likelihood
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">
-   Marginal likelihood for Bayesian linear regression
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">Bayesian ML: Fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">Bayesian linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">Bayesian model selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">Marginal likelihood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">Marginal likelihood for Bayesian linear regression</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Graphical Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Graphical Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../graphical_models/2022-02-15-draw-graphical-models.html">
-   Drawing graphical models
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../graphical_models/2022-02-15-draw-graphical-models.html">Drawing graphical models</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Mixture Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mixture Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../mixture_models/2022-02-14-GMM.html">
-   GMM learning
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../mixture_models/2022-02-14-GMM.html">GMM learning</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Information Theory
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information Theory</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../information_theory/kl-divergence.html">
-   Understanding KL-Divergence
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../information_theory/kl-divergence.html">Understanding KL-Divergence</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Variational Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../variational_models/2022-02-12-variational-inference.html">
-   Variational Inference
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../variational_models/2022-02-12-variational-inference.html">Variational Inference</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with PyMC
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyMC</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-11-blr-pymc.html">
-   Bayesian linear regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-12-logistic-bayesian.html">
-   Bayesian logistic regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-03-16-GP-PyMC3.html">
-   Gaussian process regression in PyMC
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-03-17-lls-gp-pymc3.html">
-   Local Lengthscale GP with PyMC
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-11-blr-pymc.html">Bayesian linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-12-logistic-bayesian.html">Bayesian logistic regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-03-16-GP-PyMC3.html">Gaussian process regression in PyMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-03-17-lls-gp-pymc3.html">Local Lengthscale GP with PyMC</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with Pyro
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Pyro</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pyro/2021-08-20-Bayesian.html">
-   Probabilistic Programming in Pyro
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pyro/2022_02_17_pyro_linreg.html">
-   Linear Regression using Pyro
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pyro/2022-02-20-condition-pyro.html">
-   Pyro Conditioning
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2021-08-20-Bayesian.html">Probabilistic Programming in Pyro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022_02_17_pyro_linreg.html">Linear Regression using Pyro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022-02-20-condition-pyro.html">Pyro Conditioning</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with PyTorch
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyTorch</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-09-pytorch-learn-normal.html">
-   Maximum Likelihood Estimation (MLE) for parameters of univariate and multivariate normal distribution in PyTorch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-11-pytorch-learn-normal-map.html">
-   Maximum A-Posteriori (MAP) for parameters of univariate and multivariate normal distribution in PyTorch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-17-ppca.html">
-   Probabilstic PCA using PyTorch distributions
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-14-logistic-regression.html">
-   Logistic Regression using PyTorch distributions
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-09-pytorch-learn-normal.html">Maximum Likelihood Estimation (MLE) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-11-pytorch-learn-normal-map.html">Maximum A-Posteriori (MAP) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-17-ppca.html">Probabilstic PCA using PyTorch distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-14-logistic-regression.html">Logistic Regression using PyTorch distributions</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with Tensorflow Probability
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Tensorflow Probability</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-26-tfp-distributions.html">
-   Testing out some distributions in Tensorflow Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-07-coin-toss.html">
-   Coin Toss (MLE, MAP, Fully Bayesian) in TF Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-28-tfp-linear-regression.html">
-   Linear Regression in Tensorflow Probability
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-lr.html">
-   Linear Regression in TF Probability using JointDistributionCoroutineAutoBatched
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-simple-dgm.html">
-   Simple Directed Graphical Models in TF Probability
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-26-tfp-distributions.html">Testing out some distributions in Tensorflow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-07-coin-toss.html">Coin Toss (MLE, MAP, Fully Bayesian) in TF Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-28-tfp-linear-regression.html">Linear Regression in Tensorflow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-lr.html">Linear Regression in TF Probability using JointDistributionCoroutineAutoBatched</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-simple-dgm.html">Simple Directed Graphical Models in TF Probability</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Bayesian ML with Julia
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Julia</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../bayesian_ml_with_julia/2021-09-01-Hello-Julia-Language.html">
-   Linear Regression from scratch in Julia
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_julia/2021-09-01-Hello-Julia-Language.html">Linear Regression from scratch in Julia</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Gaussian Processes
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Gaussian Processes</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2020-03-26-gp.html">
-   Some experiments in Gaussian Processes Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-15-LLS-GP.html">
-   Local Lengthscale GP
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-15-deep-gp-from-scratch.html">
-   Deep Kernel Learning
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-16-ard-gp.html">
-   Automatic relevance determination (ARD)
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-04-16-GP-vs-DeepGP.html">
-   GP v/s Deep GP on 2d data
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2022-02-23-gp_rff.html">
-   Gaussian Processes with Random Fourier Features
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2020-03-29-param-learning.html">
-   Learning Gaussian Process regression parameters using gradient descent
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2021-09-03-param-learning-sgd.html">
-   Learning Gaussian Process regression parameters using mini-batch stochastic gradient descent
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/2020-06-26-gp-understand.html">
-   Understanding Kernels in Gaussian Processes Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/pyro-deep-gp.html">
-   Deep Kernel Learning
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../gaussian_processes/pyro-binary-classification.html">
-   GP Classification
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-03-26-gp.html">Some experiments in Gaussian Processes Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-15-LLS-GP.html">Local Lengthscale GP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-15-deep-gp-from-scratch.html">Deep Kernel Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-16-ard-gp.html">Automatic relevance determination (ARD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-16-GP-vs-DeepGP.html">GP v/s Deep GP on 2d data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2022-02-23-gp_rff.html">Gaussian Processes with Random Fourier Features</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-03-29-param-learning.html">Learning Gaussian Process regression parameters using gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-09-03-param-learning-sgd.html">Learning Gaussian Process regression parameters using mini-batch stochastic gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-06-26-gp-understand.html">Understanding Kernels in Gaussian Processes Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/pyro-deep-gp.html">Deep Kernel Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/pyro-binary-classification.html">GP Classification</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Linear Regression
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Regression</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../linear_regression/2022_02_21_coordinate_descent_failure.html">
-   Coordinate descent failure example
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../linear_regression/2022_02_21_coordinate_descent_failure.html">Coordinate descent failure example</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Generative Adversarial Networks
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Adversarial Networks</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../gans/2021-05-31-GAN.html">
-   A programming introduction to GANs
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../gans/2021-05-31-GAN.html">A programming introduction to GANs</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Hidden Markov Models
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hidden Markov Models</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../hmms/2013-06-01-hmm_simulate.html">
-   HMM Simulation for Unfair Casino Problem
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../hmms/2013-07-01-hmm_continuous.html">
-   HMM Simulation for Continuous HMM
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-06-01-hmm_simulate.html">HMM Simulation for Unfair Casino Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-07-01-hmm_continuous.html">HMM Simulation for Continuous HMM</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Tensor Factorization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tensor Factorization</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-04-19-nmf-out-matrix.html">
-   Out of matrix non-negative matrix factorisation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-04-20-parafac-out-tensor.html">
-   Out of Tensor factorisation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-08-13-mf-autograd-adagrad.html">
-   Adagrad based matrix factorization
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../tensor_factorization/2017-04-21-constrained-nmf-cvx.html">
-   Constrained Non-negative matrix factorisation using CVXPY
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-19-nmf-out-matrix.html">Out of matrix non-negative matrix factorisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-20-parafac-out-tensor.html">Out of Tensor factorisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-08-13-mf-autograd-adagrad.html">Adagrad based matrix factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-21-constrained-nmf-cvx.html">Constrained Non-negative matrix factorisation using CVXPY</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Neural Networks
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Neural Networks</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2020-03-08-keras-neural-non-linear.html">
-   Some Neural Network Classification
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2020-02-28-xor-relu-vector.html">
-   Learning neural network for XOR
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2020-03-02-linear-scratch.html">
-   Neural Networks from scratch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../neural_networks/2018-01-13-denoising.html">
-   Signal denoising using RNNs in PyTorch
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-08-keras-neural-non-linear.html">Some Neural Network Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-02-28-xor-relu-vector.html">Learning neural network for XOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-02-linear-scratch.html">Neural Networks from scratch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2018-01-13-denoising.html">Signal denoising using RNNs in PyTorch</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Expectation Maximization
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Expectation Maximization</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../em/2014-06-01-em.html">
-   Programatically understanding Expectation Maximization
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../em/2014-06-01-em.html">Programatically understanding Expectation Maximization</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Recommender Systems
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Recommender Systems</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../recommender_systems/2017-12-18-recommend-keras.html">
-   Recommender Systems in Keras
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../recommender_systems/2017-12-29-neural-collaborative-filtering.html">
-   Neural Networks for Collaborative Filtering
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-18-recommend-keras.html">Recommender Systems in Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-29-neural-collaborative-filtering.html">Neural Networks for Collaborative Filtering</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Active Learning
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Active Learning</span></p>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="2018-06-20-active-committee.html">
-   Active Learning
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022_01_24_Query_by_Committee.html">
-   Query by Committee
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Active Learning with Bayesian Linear Regression
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="2022-03-06-maximal-expected-error-reduction.html">
-   Problem with Expected Model Change
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="2018-06-20-active-committee.html">Active Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022_01_24_Query_by_Committee.html">Query by Committee</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Active Learning with Bayesian Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022-03-06-maximal-expected-error-reduction.html">Problem with Expected Model Change</a></li>
+
+
+
+
+
+
+
+
+
+
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  JAX
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NNs for Time Series</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../jax/introduction-jax.html">
-   Using PRNG key
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../ml_softwares/2022-02-09-autograd-pytorch-jax.html">
-   Autograd in JAX and PyTorch
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../ml_softwares/2017-08-12-linear-regression-adagrad-vs-gd.html">
-   Programatically understanding Adagrad
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../nn_for_timeseries/2024-06-15-rnn-lstm-transformer.html">RNN, LSTM and Transformers</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Appendix 1 - Linear Algebra for ML
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">JAX</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-eigen.html">
-   Eigen values
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-determinant.html">
-   Determinant
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-Positive-semi-definite.html">
-   Positive definiteness
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2022-02-11-matrix.html">
-   Matrix as transformation and interpreting low rank matrix
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../jax/introduction-jax.html">Using PRNG key</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2022-02-09-autograd-pytorch-jax.html">Autograd in JAX and PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2017-08-12-linear-regression-adagrad-vs-gd.html">Programatically understanding Adagrad</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Appendix 2 - Stochastic processes
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - Linear Algebra for ML</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-19-stochastic-processes.html">
-   Stochastic processes
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-17-Stationary-Time_Series.html">
-   Stationarity of time-series stochastic process
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-23-Stationarity-stochastic-processes.html">
-   Stationarity of stochastic processes II
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-eigen.html">Eigen values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-determinant.html">Determinant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-Positive-semi-definite.html">Positive definiteness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2022-02-11-matrix.html">Matrix as transformation and interpreting low rank matrix</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  References
- </span>
-</p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 2 - Stochastic processes</span></p>
 <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../references/references.html">
-   References
-  </a>
- </li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-19-stochastic-processes.html">Stochastic processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-17-Stationary-Time_Series.html">Stationarity of time-series stochastic process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-23-Stationarity-stochastic-processes.html">Stationarity of stochastic processes II</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references/references.html">References</a></li>
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+</nav></div>
     </div>
-</div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
 
-            <!-- Source interaction buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/code-first-ml/book2"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        <a class="issues-button"
-            href="https://github.com/code-first-ml/book2/issues/new?title=Issue%20on%20page%20%2Fnotebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.html&body=Your%20issue%20content%20here."><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/code-first-ml/book2/edit/main/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/code-first-ml/book2/blob/main/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
 </div>
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
 
-            <!-- Launch buttons -->
 
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/code-first-ml/book2/main?urlpath=tree/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/code-first-ml/book2/blob/main/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2/edit/main/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2/issues/new?title=Issue%20on%20page%20%2Fnotebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
     </div>
+  
 </div>
+</div>
+              
+              
 
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Active Learning with Bayesian Linear Regression</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div>
+                <h2> Contents </h2>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
+            <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr">
-   A quick wrap-up for Bayesian Linear Regression (BLR)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-scikit-learn-like-class-with-fit-predict-methods-for-blr">
-   Creating scikit-learn like class with fit predict methods for BLR
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-visualizing-dataset">
-   Creating &amp; visualizing dataset
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-a-blr-model-on-the-entire-data">
-   Learning a BLR model on the entire data
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualising-the-fit">
-   Visualising the fit
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualising-the-fit-after-changing-the-prior">
-   Visualising the fit after changing the prior
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualising-the-fit-after-reducing-the-noise">
-   Visualising the fit after reducing the noise
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#intuition-to-active-learning-uncertainty-sampling-with-an-example">
-   Intuition to Active Learning (Uncertainty Sampling) with an example
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#train-set-test-set-and-pool-what-is-what">
-   Train set, test set, and pool. What is what?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-initial-train-set-test-set-and-pool">
-   Creating initial train set, test set, and pool
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-testing-initial-learner-on-train-set-iteration-0">
-   Training &amp; testing initial learner on train set (Iteration 0)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#moving-the-most-uncertain-point-from-the-pool-to-the-train-set">
-   Moving the most uncertain point from the pool to the train set
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-again-and-visualising-the-results-iteration-1">
-   Training again and visualising the results (Iteration 1)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#active-learning-procedure">
-   Active learning procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualizing-active-learning-procedure">
-   Visualizing active learning procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-a-class-for-active-learning-procedure">
-   Creating a class for active learning procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualizing-a-different-polynomial-fit-on-the-same-dataset">
-   Visualizing a different polynomial fit on the same dataset
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#active-learning-for-diabetes-dataset-from-the-scikit-learn-module">
-   Active learning for diabetes dataset from the Scikit-learn module
-  </a>
- </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr">A quick wrap-up for Bayesian Linear Regression (BLR)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-scikit-learn-like-class-with-fit-predict-methods-for-blr">Creating scikit-learn like class with fit predict methods for BLR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-visualizing-dataset">Creating &amp; visualizing dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-blr-model-on-the-entire-data">Learning a BLR model on the entire data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-fit">Visualising the fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-fit-after-changing-the-prior">Visualising the fit after changing the prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-fit-after-reducing-the-noise">Visualising the fit after reducing the noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-to-active-learning-uncertainty-sampling-with-an-example">Intuition to Active Learning (Uncertainty Sampling) with an example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-set-test-set-and-pool-what-is-what">Train set, test set, and pool. What is what?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-initial-train-set-test-set-and-pool">Creating initial train set, test set, and pool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-testing-initial-learner-on-train-set-iteration-0">Training &amp; testing initial learner on train set (Iteration 0)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-the-most-uncertain-point-from-the-pool-to-the-train-set">Moving the most uncertain point from the pool to the train set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-again-and-visualising-the-results-iteration-1">Training again and visualising the results (Iteration 1)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning-procedure">Active learning procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-active-learning-procedure">Visualizing active learning procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-class-for-active-learning-procedure">Creating a class for active learning procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-a-different-polynomial-fit-on-the-same-dataset">Visualizing a different polynomial fit on the same dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning-for-diabetes-dataset-from-the-scikit-learn-module">Active learning for diabetes dataset from the Scikit-learn module</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-            <!-- Table of contents that is only displayed when printing the page -->
-            <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Active Learning with Bayesian Linear Regression</h1>
-                <!-- Table of contents -->
-                <div id="print-main-content">
-                    <div id="jb-print-toc">
-                        
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr">
-   A quick wrap-up for Bayesian Linear Regression (BLR)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-scikit-learn-like-class-with-fit-predict-methods-for-blr">
-   Creating scikit-learn like class with fit predict methods for BLR
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-visualizing-dataset">
-   Creating &amp; visualizing dataset
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#learning-a-blr-model-on-the-entire-data">
-   Learning a BLR model on the entire data
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualising-the-fit">
-   Visualising the fit
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualising-the-fit-after-changing-the-prior">
-   Visualising the fit after changing the prior
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualising-the-fit-after-reducing-the-noise">
-   Visualising the fit after reducing the noise
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#intuition-to-active-learning-uncertainty-sampling-with-an-example">
-   Intuition to Active Learning (Uncertainty Sampling) with an example
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#train-set-test-set-and-pool-what-is-what">
-   Train set, test set, and pool. What is what?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-initial-train-set-test-set-and-pool">
-   Creating initial train set, test set, and pool
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-testing-initial-learner-on-train-set-iteration-0">
-   Training &amp; testing initial learner on train set (Iteration 0)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#moving-the-most-uncertain-point-from-the-pool-to-the-train-set">
-   Moving the most uncertain point from the pool to the train set
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#training-again-and-visualising-the-results-iteration-1">
-   Training again and visualising the results (Iteration 1)
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#active-learning-procedure">
-   Active learning procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualizing-active-learning-procedure">
-   Visualizing active learning procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#creating-a-class-for-active-learning-procedure">
-   Creating a class for active learning procedure
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#visualizing-a-different-polynomial-fit-on-the-same-dataset">
-   Visualizing a different polynomial fit on the same dataset
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#active-learning-for-diabetes-dataset-from-the-scikit-learn-module">
-   Active learning for diabetes dataset from the Scikit-learn module
-  </a>
- </li>
-</ul>
 
-                        </nav>
-                    </div>
-                </div>
-            </div>
-            
-              <div>
+              
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="active-learning-with-bayesian-linear-regression">
-<h1>Active Learning with Bayesian Linear Regression<a class="headerlink" href="#active-learning-with-bayesian-linear-regression" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="active-learning-with-bayesian-linear-regression">
+<h1>Active Learning with Bayesian Linear Regression<a class="headerlink" href="#active-learning-with-bayesian-linear-regression" title="Permalink to this headline">#</a></h1>
 <blockquote>
 <div><p>A programming introduction to Active Learning with Bayesian Linear Regression.</p>
 </div></blockquote>
 <p>Author: <a class="reference external" href="https://patel-zeel.github.io/">Zeel B Patel</a>, <a class="reference external" href="https://nipunbatra.github.io/">Nipun Batra</a></p>
-<div class="section" id="a-quick-wrap-up-for-bayesian-linear-regression-blr">
-<h2>A quick wrap-up for Bayesian Linear Regression (BLR)<a class="headerlink" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr" title="Permalink to this headline">¶</a></h2>
+<section id="a-quick-wrap-up-for-bayesian-linear-regression-blr">
+<h2>A quick wrap-up for Bayesian Linear Regression (BLR)<a class="headerlink" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr" title="Permalink to this headline">#</a></h2>
 <p>We have a feature matrix <span class="math notranslate nohighlight">\(X\)</span> and a target vector <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>. We want to obtain <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> vector in such a way that the error <span class="math notranslate nohighlight">\(\boldsymbol{\epsilon}\)</span> for the following equation is minimum.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1bbecb48-4c9f-4991-8453-87eff0f3f74e">
-<span class="eqno">(31)<a class="headerlink" href="#equation-1bbecb48-4c9f-4991-8453-87eff0f3f74e" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c75faec9-afab-4693-8dca-897408f6abce">
+<span class="eqno">(31)<a class="headerlink" href="#equation-c75faec9-afab-4693-8dca-897408f6abce" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y = X\boldsymbol{\theta} + \boldsymbol{\epsilon}
 \end{equation}\]</div>
 <p>Prior PDF for <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-03b3cc1f-85ce-454e-9c02-aedfce156cbb">
-<span class="eqno">(32)<a class="headerlink" href="#equation-03b3cc1f-85ce-454e-9c02-aedfce156cbb" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6f7e06b5-2a9f-431d-99af-95a5a7f35d71">
+<span class="eqno">(32)<a class="headerlink" href="#equation-6f7e06b5-2a9f-431d-99af-95a5a7f35d71" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p(\boldsymbol{\theta}) \sim \mathcal{N}(\mathbf{m}_0, S_0)
 \end{equation}\]</div>
 <p>Where <span class="math notranslate nohighlight">\(S_0\)</span> is prior covariance matrix, and <span class="math notranslate nohighlight">\(\mathbf{m}_0\)</span> is prior mean.</p>
 <p>Posterier PDF can be given as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-734aafd6-992f-4ddd-92ee-1bfd0a987d31">
-<span class="eqno">(33)<a class="headerlink" href="#equation-734aafd6-992f-4ddd-92ee-1bfd0a987d31" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6236c7cb-c94f-4f65-be71-2200cbf231a3">
+<span class="eqno">(33)<a class="headerlink" href="#equation-6236c7cb-c94f-4f65-be71-2200cbf231a3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 p(\boldsymbol{\theta}|X,\mathbf{y}) \sim \mathcal{N}(\boldsymbol{\theta} | \mathbf{m}_n, S_n) \\
 S_n = (S_0^{-1} + \sigma_{mle}^{-2}X^TX) \\
 \mathbf{m}_n = S_n(S_0^{-1}\mathbf{m}_0+\sigma_{mle}^{-2}X^T\mathbf{y})
 \end{equation}\]</div>
 <p>Maximum likelihood estimation of <span class="math notranslate nohighlight">\(\sigma\)</span> can be calculated as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5f545667-7f95-4fe3-ad1e-f016ac7e65e1">
-<span class="eqno">(34)<a class="headerlink" href="#equation-5f545667-7f95-4fe3-ad1e-f016ac7e65e1" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-962b2999-4734-4b9c-85d6-61028f166a0d">
+<span class="eqno">(34)<a class="headerlink" href="#equation-962b2999-4734-4b9c-85d6-61028f166a0d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \theta_{mle} = (X^TX)^{-1}X^T\mathbf{y} \\
 \sigma_{mle} = ||\mathbf{y} - X\boldsymbol{\theta}_{mle}||
 \end{equation}\]</div>
 <p>Finally, predicted mean <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}_{mean}\)</span> and predicted covariance matrix <span class="math notranslate nohighlight">\(\hat{Y}_{cov}\)</span> can be given as,</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3ca17d3a-6d38-4d1b-9e76-f68ba581b464">
-<span class="eqno">(35)<a class="headerlink" href="#equation-3ca17d3a-6d38-4d1b-9e76-f68ba581b464" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-d392e075-bfcd-470c-8966-a8651239ad88">
+<span class="eqno">(35)<a class="headerlink" href="#equation-d392e075-bfcd-470c-8966-a8651239ad88" title="Permalink to this equation">#</a></span>\[\begin{equation}
 \hat{\mathbf{y}} \sim \mathcal{N}(\hat{\mathbf{y}}_{mean}, \hat{\mathbf{y}}_{cov}) \\
 \hat{\mathbf{y}}_{mean} = X\mathbf{m}_n \\
 \hat{Y}_{cov} = XS_nX^T
 \end{equation}\]</div>
 <p>Now, let’s put everything together and write a class for <a class="reference external" href="https://nipunbatra.github.io/blog/ml/2020/02/20/bayesian-linear-regression.html">Bayesian Linear Regression</a>.</p>
-</div>
-<div class="section" id="creating-scikit-learn-like-class-with-fit-predict-methods-for-blr">
-<h2>Creating scikit-learn like class with fit predict methods for BLR<a class="headerlink" href="#creating-scikit-learn-like-class-with-fit-predict-methods-for-blr" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creating-scikit-learn-like-class-with-fit-predict-methods-for-blr">
+<h2>Creating scikit-learn like class with fit predict methods for BLR<a class="headerlink" href="#creating-scikit-learn-like-class-with-fit-predict-methods-for-blr" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1174,12 +794,12 @@ S_n = (S_0^{-1} + \sigma_{mle}^{-2}X^TX) \\
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="creating-visualizing-dataset">
-<h2>Creating &amp; visualizing dataset<a class="headerlink" href="#creating-visualizing-dataset" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creating-visualizing-dataset">
+<h2>Creating &amp; visualizing dataset<a class="headerlink" href="#creating-visualizing-dataset" title="Permalink to this headline">#</a></h2>
 <p>To start with, let’s create a random dataset with degree 3 polynomial function with some added noise.</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9abdd3c8-7110-4a88-afe5-e79ea95fee73">
-<span class="eqno">(36)<a class="headerlink" href="#equation-9abdd3c8-7110-4a88-afe5-e79ea95fee73" title="Permalink to this equation">¶</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-87b6638f-8c88-456b-8868-0a813ea29473">
+<span class="eqno">(36)<a class="headerlink" href="#equation-87b6638f-8c88-456b-8868-0a813ea29473" title="Permalink to this equation">#</a></span>\[\begin{equation}
 Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 \end{equation}\]</div>
 <div class="cell docutils container">
@@ -1212,12 +832,12 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_9_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_9_0.png" />
+<img alt="../../_images/1e6887c7d44f984c6564d0c0677de92fe390fffb714c0d4f76da9de15af0a762.png" src="../../_images/1e6887c7d44f984c6564d0c0677de92fe390fffb714c0d4f76da9de15af0a762.png" />
 </div>
 </div>
-</div>
-<div class="section" id="learning-a-blr-model-on-the-entire-data">
-<h2>Learning a BLR model on the entire data<a class="headerlink" href="#learning-a-blr-model-on-the-entire-data" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="learning-a-blr-model-on-the-entire-data">
+<h2>Learning a BLR model on the entire data<a class="headerlink" href="#learning-a-blr-model-on-the-entire-data" title="Permalink to this headline">#</a></h2>
 <p>We’ll take <span class="math notranslate nohighlight">\(M_0\)</span> (prior mean) as zero vector initially, assuming that we do not have any prior knowledge about <span class="math notranslate nohighlight">\(M_0\)</span>. We’re taking <span class="math notranslate nohighlight">\(S_0\)</span> (prior covariance) as the identity matrix, assuming that all coefficients are completely independent of each other.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1235,9 +855,9 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="visualising-the-fit">
-<h2>Visualising the fit<a class="headerlink" href="#visualising-the-fit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="visualising-the-fit">
+<h2>Visualising the fit<a class="headerlink" href="#visualising-the-fit" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -1245,13 +865,13 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_14_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_14_0.png" />
+<img alt="../../_images/dae753bebb9ecd467771915f358170787ba57df9ddafed0bc854df40b0eccb87.png" src="../../_images/dae753bebb9ecd467771915f358170787ba57df9ddafed0bc854df40b0eccb87.png" />
 </div>
 </div>
 <p>This doesn’t look like a good fit, right? Let’s set the prior closer to the real values and visualize the fit again.</p>
-</div>
-<div class="section" id="visualising-the-fit-after-changing-the-prior">
-<h2>Visualising the fit after changing the prior<a class="headerlink" href="#visualising-the-fit-after-changing-the-prior" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="visualising-the-fit-after-changing-the-prior">
+<h2>Visualising the fit after changing the prior<a class="headerlink" href="#visualising-the-fit-after-changing-the-prior" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -1270,13 +890,13 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_18_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_18_0.png" />
+<img alt="../../_images/7b81d258cab4beee5b50b08a6beada6bbeef68cb468fbc3bcd7069a3035146d2.png" src="../../_images/7b81d258cab4beee5b50b08a6beada6bbeef68cb468fbc3bcd7069a3035146d2.png" />
 </div>
 </div>
 <p>Hmm, better. Now let’s see how it fits after reducing the noise and setting the prior mean to zero vector again.</p>
-</div>
-<div class="section" id="visualising-the-fit-after-reducing-the-noise">
-<h2>Visualising the fit after reducing the noise<a class="headerlink" href="#visualising-the-fit-after-reducing-the-noise" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="visualising-the-fit-after-reducing-the-noise">
+<h2>Visualising the fit after reducing the noise<a class="headerlink" href="#visualising-the-fit-after-reducing-the-noise" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -1304,24 +924,24 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_23_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_23_0.png" />
+<img alt="../../_images/37d9ffcf5a4a15c1f819fd4cbf7056ff56c7294346cd74055feb1d07dad94a67.png" src="../../_images/37d9ffcf5a4a15c1f819fd4cbf7056ff56c7294346cd74055feb1d07dad94a67.png" />
 </div>
 </div>
 <p>When the noise was high, the model tended to align with the prior. After keeping the prior closer to the original coefficients, the model was improved as expected. From the last plot, we can say that as noise reduces from the data, the impact of the prior reduces, and the model tries to fit the data more precisely. Therefore, we can say that when data is too noisy or insufficient, a wisely chosen prior can produce a precise fit.</p>
-</div>
-<div class="section" id="intuition-to-active-learning-uncertainty-sampling-with-an-example">
-<h2>Intuition to Active Learning (Uncertainty Sampling) with an example<a class="headerlink" href="#intuition-to-active-learning-uncertainty-sampling-with-an-example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="intuition-to-active-learning-uncertainty-sampling-with-an-example">
+<h2>Intuition to Active Learning (Uncertainty Sampling) with an example<a class="headerlink" href="#intuition-to-active-learning-uncertainty-sampling-with-an-example" title="Permalink to this headline">#</a></h2>
 <p>Let’s take the case where we want to train a machine learning model to classify if a person is infected with COVID-19 or not, but the testing facilities for the same are not available so widely. We may have very few amounts of data for detected positive and detected negative patients. Now, we want our model to be highly confident or least uncertain about its results; otherwise, it may create havoc for wrongly classified patients, but, our bottleneck is labeled data. Thanks to active learning techniques, we can overcome this problem smartly. How?</p>
 <p>We train our model with existing data and test it on all the suspected patients’ data. Let’s say we have an uncertainty measure or confidence level about each tested data point (distance from the decision boundary in case of SVM, variance in case of Gaussian processes, or Bayesian Linear Regression). We can choose a patient for which our model is least certain, and send him to COVID-19 testing facilities (assuming that we can send only one patient at a time). Now, we can include his data to the train set and test the model on everyone else. By following the same procedure repeatedly, we can increase the size of our train data and confidence of the model without sending everyone randomly for testing.</p>
 <p>This method is called Uncertainty Sampling in Active Learning. Now let’s formally define Active Learning. From Wikipedia,</p>
 <p><em>Active learning is a special case of machine learning in which a learning algorithm can interactively query a user (or some other information source) to label new data points with the desired outputs.</em></p>
 <p>Now, we’ll go through the active learning procedure step by step.</p>
-</div>
-<div class="section" id="train-set-test-set-and-pool-what-is-what">
-<h2>Train set, test set, and pool. What is what?<a class="headerlink" href="#train-set-test-set-and-pool-what-is-what" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="train-set-test-set-and-pool-what-is-what">
+<h2>Train set, test set, and pool. What is what?<a class="headerlink" href="#train-set-test-set-and-pool-what-is-what" title="Permalink to this headline">#</a></h2>
 <p>The train set includes labeled data points. The pool includes potential data points to query for a label, and the test set includes labeled data points to check the performance of our model. Here, we cannot actually do a query to anyone, so we assume that we do not have labels for the pool while training, and after each iteration, we include a data point from the pool set to the train set for which our model has the highest uncertainty.</p>
 <p>So, the algorithm can be represented as the following,</p>
-<ol class="simple">
+<ol class="arabic simple">
 <li><p>Train the model with the train set.</p></li>
 <li><p>Test the performance on the test set (This should keep improving).</p></li>
 <li><p>Test the model with the pool.</p></li>
@@ -1329,9 +949,9 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 <li><p>Add that datapoint into the train set.</p></li>
 <li><p>Repeat step 1 to step 5 for <span class="math notranslate nohighlight">\(K\)</span> iterations (<span class="math notranslate nohighlight">\(K\)</span> ranges from <span class="math notranslate nohighlight">\(0\)</span> to the pool size).</p></li>
 </ol>
-</div>
-<div class="section" id="creating-initial-train-set-test-set-and-pool">
-<h2>Creating initial train set, test set, and pool<a class="headerlink" href="#creating-initial-train-set-test-set-and-pool" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creating-initial-train-set-test-set-and-pool">
+<h2>Creating initial train set, test set, and pool<a class="headerlink" href="#creating-initial-train-set-test-set-and-pool" title="Permalink to this headline">#</a></h2>
 <p>Let’s take half of the dataset as the test set, and from another half, we will start with some points as the train set and remaining as the pool. Let’s start with 2 data points as the train set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1366,7 +986,7 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_32_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_32_0.png" />
+<img alt="../../_images/28c354f8e3ad963a227bee527fe219f30826065bab219da991783c8dbc9c59ea.png" src="../../_images/28c354f8e3ad963a227bee527fe219f30826065bab219da991783c8dbc9c59ea.png" />
 </div>
 </div>
 <p>Let’s initialize a few dictionaries to keep track of each iteration.</p>
@@ -1381,9 +1001,9 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="training-testing-initial-learner-on-train-set-iteration-0">
-<h2>Training &amp; testing initial learner on train set (Iteration 0)<a class="headerlink" href="#training-testing-initial-learner-on-train-set-iteration-0" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="training-testing-initial-learner-on-train-set-iteration-0">
+<h2>Training &amp; testing initial learner on train set (Iteration 0)<a class="headerlink" href="#training-testing-initial-learner-on-train-set-iteration-0" title="Permalink to this headline">#</a></h2>
 <p>Now we will train the model for the initial train set, which is iteration 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1456,7 +1076,7 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_43_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_43_0.png" />
+<img alt="../../_images/bbf536d9881371f712e46fc852d8143cb9804ff1fe31b1155f5df8da80656736.png" src="../../_images/bbf536d9881371f712e46fc852d8143cb9804ff1fe31b1155f5df8da80656736.png" />
 </div>
 </div>
 <p>Let’s check the maximum uncertainty about any point for the model.</p>
@@ -1513,7 +1133,7 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_51_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_51_0.png" />
+<img alt="../../_images/7b35ec44a715ffead115254bab8a78c0c83d159cab3827f69d3c8dd6712cb600.png" src="../../_images/7b35ec44a715ffead115254bab8a78c0c83d159cab3827f69d3c8dd6712cb600.png" />
 </div>
 </div>
 <p>Now uncertainty is visible, and currently, it’s high at the left-most points. We are trying to fit a degree 5 polynomial here. So our linear regression coefficients are 6, including the bias. If we choose train points equal to or lesser than 6, our model perfectly fits the train points and has no uncertainty. Choosing train points more than 6 induces uncertainty in the model.</p>
@@ -1539,9 +1159,9 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="moving-the-most-uncertain-point-from-the-pool-to-the-train-set">
-<h2>Moving the most uncertain point from the pool to the train set<a class="headerlink" href="#moving-the-most-uncertain-point-from-the-pool-to-the-train-set" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="moving-the-most-uncertain-point-from-the-pool-to-the-train-set">
+<h2>Moving the most uncertain point from the pool to the train set<a class="headerlink" href="#moving-the-most-uncertain-point-from-the-pool-to-the-train-set" title="Permalink to this headline">#</a></h2>
 <p>In the previous plot, we saw that the model was least certain about the left-most point. We’ll move that point from the pool to the train set and see the effect.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1578,9 +1198,9 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="training-again-and-visualising-the-results-iteration-1">
-<h2>Training again and visualising the results (Iteration 1)<a class="headerlink" href="#training-again-and-visualising-the-results-iteration-1" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="training-again-and-visualising-the-results-iteration-1">
+<h2>Training again and visualising the results (Iteration 1)<a class="headerlink" href="#training-again-and-visualising-the-results-iteration-1" title="Permalink to this headline">#</a></h2>
 <p>This time, we will pass previously learnt prior to the next iteration.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1627,7 +1247,7 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_72_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_72_0.png" />
+<img alt="../../_images/3e0f775a706fbb0a0b988bc68e7a2c6bdf2019f3d13145bc2a5ad7f1273b1fc9.png" src="../../_images/3e0f775a706fbb0a0b988bc68e7a2c6bdf2019f3d13145bc2a5ad7f1273b1fc9.png" />
 </div>
 </div>
 <p>Before &amp; after adding most uncertain point</p>
@@ -1641,14 +1261,14 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_74_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_74_0.png" />
+<img alt="../../_images/e0749da5add0f860e4a22ca0947bcd39e72037701dce48ea49152518ed09fee6.png" src="../../_images/e0749da5add0f860e4a22ca0947bcd39e72037701dce48ea49152518ed09fee6.png" />
 </div>
 </div>
 <p>We can see that including most uncertain point into the train set has produced a better fit and MAE for test set has been reduced. Also, uncertainty has reduced at the left part of the data but it has increased a bit on the right part of the data.</p>
 <p>Now let’s do this for few more iterations in a loop and visualise the results.</p>
-</div>
-<div class="section" id="active-learning-procedure">
-<h2>Active learning procedure<a class="headerlink" href="#active-learning-procedure" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="active-learning-procedure">
+<h2>Active learning procedure<a class="headerlink" href="#active-learning-procedure" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_iterations</span> <span class="o">=</span> <span class="mi">20</span>
@@ -1726,13 +1346,13 @@ Y = (5X^3 - 4X^2 + 3X - 2) + \mathcal{N}(0,1)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_78_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_78_0.png" />
+<img alt="../../_images/e3fb23a488898825f7c9ad788749f7ad7d1b07f97b42e9f2b0010fdba65b4ef9.png" src="../../_images/e3fb23a488898825f7c9ad788749f7ad7d1b07f97b42e9f2b0010fdba65b4ef9.png" />
 </div>
 </div>
 <p>The plot above shows that MAE on the test set fluctuates a bit initially then reduces gradually as we keep including more points from the pool to the train set. Let’s visualise fits for all the iterations. We’ll discuss this behaviour after that.</p>
-</div>
-<div class="section" id="visualizing-active-learning-procedure">
-<h2>Visualizing active learning procedure<a class="headerlink" href="#visualizing-active-learning-procedure" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="visualizing-active-learning-procedure">
+<h2>Visualizing active learning procedure<a class="headerlink" href="#visualizing-active-learning-procedure" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Initial model&#39;</span><span class="p">)</span>
@@ -2013,7 +1633,7 @@ input[type=range].anim-slider {
     var slider_id = "_anim_slider030fe48d84b94165aceb2653ac6ccf40";
     var loop_select_id = "_anim_loop_select030fe48d84b94165aceb2653ac6ccf40";
     var frames = new Array(21);
-
+    
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAtAAAAFoCAYAAAB+JswZAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
 bGliIHZlcnNpb24zLjMuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8vihELAAAACXBIWXMAAAsT\
 AAALEwEAmpwYAAB9sklEQVR4nO3de1xUdf4/8NcBZI4oMFxEVHAMlUOCjHlNK+1r5G3V1TLb3Ny0\
@@ -14521,9 +14141,9 @@ DxhAExERERH5gAE0EREREZEPGEATEREREfng/wFvggBLTVAsGwAAAABJRU5ErkJggg==\
 </div>
 <p>We can see that the point having highest uncertainty was chosen in first iteration and it produced the near optimal fit. After that, error reduced gradually.</p>
 <p>Now, let’s put everything together and create a class for active learning procedure</p>
-</div>
-<div class="section" id="creating-a-class-for-active-learning-procedure">
-<h2>Creating a class for active learning procedure<a class="headerlink" href="#creating-a-class-for-active-learning-procedure" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="creating-a-class-for-active-learning-procedure">
+<h2>Creating a class for active learning procedure<a class="headerlink" href="#creating-a-class-for-active-learning-procedure" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ActiveL</span><span class="p">():</span>
@@ -14656,9 +14276,9 @@ DxhAExERERH5gAE0EREREZEPGEATEREREfng/wFvggBLTVAsGwAAAABJRU5ErkJggg==\
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="visualizing-a-different-polynomial-fit-on-the-same-dataset">
-<h2>Visualizing a different polynomial fit on the same dataset<a class="headerlink" href="#visualizing-a-different-polynomial-fit-on-the-same-dataset" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="visualizing-a-different-polynomial-fit-on-the-same-dataset">
+<h2>Visualizing a different polynomial fit on the same dataset<a class="headerlink" href="#visualizing-a-different-polynomial-fit-on-the-same-dataset" title="Permalink to this headline">#</a></h2>
 <p>Let’s try to fit a degree 7 polynomial to the same data now.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -14927,7 +14547,7 @@ input[type=range].anim-slider {
     var slider_id = "_anim_slider44721ddc31404fc097fd9e99681ddc4e";
     var loop_select_id = "_anim_loop_select44721ddc31404fc097fd9e99681ddc4e";
     var frames = new Array(21);
-
+    
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6gAAAFoCAYAAABaNta1AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
 bGliIHZlcnNpb24zLjMuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8vihELAAAACXBIWXMAAAsT\
 AAALEwEAmpwYAACZSElEQVR4nOzde3yT533//9fFyeJgkA0EQhIENvGdE3ZiDDmsS9Ni03RNadMZ\
@@ -30441,9 +30061,9 @@ SUVORK5CYII=\
 </div></div>
 </div>
 <p>We can clearly see that model was fitting the train points well and uncertainty was high at the left-most position. After first iteration, the left-most point was added to the train set and MAE reduced significantly. Similar phenomeneon happened at iteration 2 with the right-most point. After that error kept reducing at slower rate gradually because fit was near optimal after just 2 iterations.</p>
-</div>
-<div class="section" id="active-learning-for-diabetes-dataset-from-the-scikit-learn-module">
-<h2>Active learning for diabetes dataset from the Scikit-learn module<a class="headerlink" href="#active-learning-for-diabetes-dataset-from-the-scikit-learn-module" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="active-learning-for-diabetes-dataset-from-the-scikit-learn-module">
+<h2>Active learning for diabetes dataset from the Scikit-learn module<a class="headerlink" href="#active-learning-for-diabetes-dataset-from-the-scikit-learn-module" title="Permalink to this headline">#</a></h2>
 <p>Let’s run our model for diabetes data from sklearn module. The data have various features like age, sex, weight etc. of diabetic people and target is increment in disease after one year. We’ll choose only ‘weight’ feature, which seems to have more correlation with the target.</p>
 <p>We’ll try to fit degree 1 polynomial to this data, as our data seems to have a linear fit. First, let’s check the performance of Scikit-learn linear regression model.</p>
 <div class="cell docutils container">
@@ -30469,7 +30089,7 @@ SUVORK5CYII=\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_97_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_97_0.png" />
+<img alt="../../_images/eeb922c4065045470815b970feb6de9747c4eb21afc830bc9ecb8cb3a9a5daf7.png" src="../../_images/eeb922c4065045470815b970feb6de9747c4eb21afc830bc9ecb8cb3a9a5daf7.png" />
 </div>
 </div>
 <p>Let’s fit the Scikit-learn linear regression model with 50% train-test split.</p>
@@ -30510,7 +30130,7 @@ SUVORK5CYII=\
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_103_0.png" src="../../_images/2020-04-21-active-learning-with-bayesian-linear-regression_103_0.png" />
+<img alt="../../_images/bc25bcddb9be73aa79b403eb1164e6425d6f5454c3ac1f249e10fa98a8d7e03c.png" src="../../_images/bc25bcddb9be73aa79b403eb1164e6425d6f5454c3ac1f249e10fa98a8d7e03c.png" />
 </div>
 </div>
 <p>Now we’ll fit the same data with our BLR model</p>
@@ -30771,7 +30391,7 @@ input[type=range].anim-slider {
     var slider_id = "_anim_sliderb647e48ba8204c8eb061c76a7d4ff057";
     var loop_select_id = "_anim_loop_selectb647e48ba8204c8eb061c76a7d4ff057";
     var frames = new Array(21);
-
+    
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA6gAAAFoCAYAAABaNta1AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
 bGliIHZlcnNpb24zLjMuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8vihELAAAACXBIWXMAAAsT\
 AAALEwEAmpwYAACARklEQVR4nO39a3Ab550n+n8f8ALwDoAiadmKKZGxaWciySapJLv2zFgW6Z1z\
@@ -46662,8 +46282,8 @@ MAE for Bayesian Linear Regression is 0.1573800181180475
 </div>
 </div>
 <p>At the end, results of sklearn linear regression and our active learning based BLR model are comparable even though we’ve used only 20 points to train our model over 221 points used by sklearn. This is because active learning enables us to choose those datapoints for training, which are going to contribute the most towards a precise fit.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -46677,7 +46297,7 @@ MAE for Bayesian Linear Regression is 0.1573800181180475
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./notebooks/active_learning"
         },
         predefinedOutput: true
@@ -46685,44 +46305,122 @@ MAE for Bayesian Linear Regression is 0.1573800181180475
     </script>
     <script>kernelName = 'python3'</script>
 
-              </div>
+                </article>
               
-            
-                <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="2022_01_24_Query_by_Committee.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Query by Committee</p>
-        </div>
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2022_01_24_Query_by_Committee.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Query by Committee</p>
+      </div>
     </a>
-    <a class='right-next' id="next-link" href="2022-03-06-maximal-expected-error-reduction.html" title="next page">
-    <div class="prev-next-info">
+    <a class="right-next"
+       href="2022-03-06-maximal-expected-error-reduction.html"
+       title="next page">
+      <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
         <p class="prev-next-title">Problem with Expected Model Change</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
-</div>
-            
-        </div>
-    </div>
-    <footer class="footer">
-  <p>
-    
-      By The Jupyter Book community<br/>
-    
-        &copy; Copyright 2022.<br/>
-  </p>
-</footer>
-</main>
-
-
       </div>
-    </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
   
-  <script src="../../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+</div>
 
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-quick-wrap-up-for-bayesian-linear-regression-blr">A quick wrap-up for Bayesian Linear Regression (BLR)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-scikit-learn-like-class-with-fit-predict-methods-for-blr">Creating scikit-learn like class with fit predict methods for BLR</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-visualizing-dataset">Creating &amp; visualizing dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-a-blr-model-on-the-entire-data">Learning a BLR model on the entire data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-fit">Visualising the fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-fit-after-changing-the-prior">Visualising the fit after changing the prior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualising-the-fit-after-reducing-the-noise">Visualising the fit after reducing the noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-to-active-learning-uncertainty-sampling-with-an-example">Intuition to Active Learning (Uncertainty Sampling) with an example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-set-test-set-and-pool-what-is-what">Train set, test set, and pool. What is what?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-initial-train-set-test-set-and-pool">Creating initial train set, test set, and pool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-testing-initial-learner-on-train-set-iteration-0">Training &amp; testing initial learner on train set (Iteration 0)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moving-the-most-uncertain-point-from-the-pool-to-the-train-set">Moving the most uncertain point from the pool to the train set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-again-and-visualising-the-results-iteration-1">Training again and visualising the results (Iteration 1)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning-procedure">Active learning procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-active-learning-procedure">Visualizing active learning procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-class-for-active-learning-procedure">Creating a class for active learning procedure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-a-different-polynomial-fit-on-the-same-dataset">Visualizing a different polynomial fit on the same dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#active-learning-for-diabetes-dataset-from-the-scikit-learn-module">Active learning for diabetes dataset from the Scikit-learn module</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
