@@ -666,7 +666,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-with-dummy-data">Checking with dummy data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-some-training-data">Getting some training data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-training-sequences">Create training sequences</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator">Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-text">Generate text</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#long-short-term-memory-lstm">Long Short-Term Memory (LSTM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-lstms">Coding LSTMs</a></li>
 </ul>
 </li>
 </ul>
@@ -707,6 +712,8 @@ document.write(`
 <span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
 </pre></div>
@@ -798,7 +805,10 @@ h_t = f(h_{t-1}, x_t)
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">))</span>
         
     <span class="nd">@jaxtyped</span><span class="p">(</span><span class="n">typechecker</span><span class="o">=</span><span class="n">beartype</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim feat_dim&quot;</span><span class="p">],</span> <span class="n">h_prev</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim feat_dim&quot;</span><span class="p">],</span> 
+                <span class="n">h_prev</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">h_prev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
         <span class="k">else</span><span class="p">:</span>
@@ -825,7 +835,7 @@ h_t = f(h_{t-1}, x_t)
         <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
         
     <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim sequence_len feat_dim&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim feat_dim&quot;</span><span class="p">]:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># initial hidden state</span>
         
         <span class="c1"># encode</span>
         <span class="k">for</span> <span class="n">seq_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence_len</span><span class="p">):</span>
@@ -1351,6 +1361,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </div>
 </div>
 </div>
+</section>
+<section id="train-the-model">
+<h3>Train the model<a class="headerlink" href="#train-the-model" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">512</span>
@@ -1417,8 +1430,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <script type="application/vnd.jupyter.widget-view+json">{"model_id": "aafb6fa8ee9b440f8064ddca3a977f3c", "version_major": 2, "version_minor": 0}</script></div>
 </div>
 </section>
-<section id="generator">
-<h3>Generator<a class="headerlink" href="#generator" title="Permalink to this headline">#</a></h3>
+<section id="generate-text">
+<h3>Generate text<a class="headerlink" href="#generate-text" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_char</span><span class="p">(</span><span class="n">y_hat</span><span class="p">):</span>
@@ -1465,6 +1478,197 @@ right solitons under
 
 Output:
 edina in approxistibg inctian strgenslis crmporibnt whew itecharizn pust becala inemantwond the $imile an Paksu foundtion, finitlerans ard dousculaca. The possting of the derev. Thi s)steed s. Te  aen
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="long-short-term-memory-lstm">
+<h2>Long Short-Term Memory (LSTM)<a class="headerlink" href="#long-short-term-memory-lstm" title="Permalink to this headline">#</a></h2>
+<p>RNNs have vanishing gradient problem. LSTM is a solution to this problem.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Encoder</p></th>
+<th class="head"><p>Decoder</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Vanilla NNs</p></td>
+<td><p><span class="math notranslate nohighlight">\(h = f(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(y = g(h)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>RNNs</p></td>
+<td><p><span class="math notranslate nohighlight">\(h_t = f(h_{t-1}, x_t)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(y_t = g(h_t)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>For LSTM</p>
+<ul class="simple">
+<li><p>Encoder</p></li>
+</ul>
+<div class="amsmath math notranslate nohighlight" id="equation-217e133e-a1ac-41fb-8373-a9e1d8f0c484">
+<span class="eqno">(37)<a class="headerlink" href="#equation-217e133e-a1ac-41fb-8373-a9e1d8f0c484" title="Permalink to this equation">#</a></span>\[\begin{align}
+    \text{Forget: } &amp; f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f) \\
+    \text{Input: } &amp; i_t = \sigma(W_i \cdot [h_{t-1}, x_t] + b_i) \\
+    \text{Output: } &amp; o_t = \sigma(W_o \cdot [h_{t-1}, x_t] + b_o) \\
+    \text{Cell: } &amp; \tilde{C}_t = \tanh(W_C \cdot [h_{t-1}, x_t] + b_C) \\
+    \text{Cell state: } &amp; C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t \\
+    \text{Hidden state: } &amp; h_t = o_t \odot \tanh(C_t)
+\end{align}\]</div>
+<ul class="simple">
+<li><p>Decoder
+$<span class="math notranslate nohighlight">\(
+  y_t = g(h_t)
+\)</span>$</p></li>
+</ul>
+<section id="coding-lstms">
+<h3>Coding LSTMs<a class="headerlink" href="#coding-lstms" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LSTMEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LSTMEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">get_weights</span><span class="p">():</span>
+            <span class="n">w_x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">feat_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">feat_dim</span> <span class="o">*</span> <span class="n">hidden_dim</span><span class="p">))</span>
+            <span class="n">w_h</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hidden_dim</span> <span class="o">*</span> <span class="n">hidden_dim</span><span class="p">))</span>
+            <span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">w_x</span><span class="p">,</span> <span class="n">w_h</span><span class="p">,</span> <span class="n">b</span>
+        
+        <span class="c1"># forget gate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_x_f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_f</span> <span class="o">=</span> <span class="n">get_weights</span><span class="p">()</span>
+        
+        <span class="c1"># input gate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_x_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_i</span> <span class="o">=</span> <span class="n">get_weights</span><span class="p">()</span>
+        
+        <span class="c1"># output gate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_x_o</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_o</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_o</span> <span class="o">=</span> <span class="n">get_weights</span><span class="p">()</span>
+        
+        <span class="c1"># cell weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_x_c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_c</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_c</span> <span class="o">=</span> <span class="n">get_weights</span><span class="p">()</span>
+        
+    <span class="nd">@jaxtyped</span><span class="p">(</span><span class="n">typechecker</span><span class="o">=</span><span class="n">beartype</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim feat_dim&quot;</span><span class="p">],</span> 
+                <span class="n">h_prev</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="n">c_prev</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">],</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]]:</span>
+        <span class="k">if</span> <span class="n">h_prev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">i_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_i</span><span class="p">)</span> <span class="c1"># input multiplier</span>
+            <span class="n">o_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_o</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_o</span><span class="p">)</span> <span class="c1"># output multiplier</span>
+            <span class="n">c_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_c</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_c</span><span class="p">)</span> <span class="c1"># pre cell state</span>
+            <span class="n">c_t</span> <span class="o">=</span> <span class="n">i_t</span> <span class="o">*</span> <span class="n">c_t</span> <span class="c1"># cell state</span>
+            <span class="n">h_t</span> <span class="o">=</span> <span class="n">o_t</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">c_t</span><span class="p">)</span> <span class="c1"># hidden state</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_f</span> <span class="o">+</span> <span class="n">h_prev</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_f</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_f</span><span class="p">)</span> <span class="c1"># forget gate</span>
+            <span class="n">i_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_i</span> <span class="o">+</span> <span class="n">h_prev</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_i</span><span class="p">)</span> <span class="c1"># input multiplier</span>
+            <span class="n">o_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_o</span> <span class="o">+</span> <span class="n">h_prev</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_o</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_o</span><span class="p">)</span> <span class="c1"># output multiplier</span>
+            <span class="n">c_t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x_c</span> <span class="o">+</span> <span class="n">h_prev</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h_c</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_c</span><span class="p">)</span> <span class="c1"># pre cell state</span>
+            <span class="n">c_t</span> <span class="o">=</span> <span class="n">i_t</span> <span class="o">*</span> <span class="n">c_t</span> <span class="o">+</span> <span class="n">f_t</span> <span class="o">*</span> <span class="n">c_prev</span> <span class="c1"># cell state</span>
+            <span class="n">h_t</span> <span class="o">=</span> <span class="n">o_t</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">c_t</span><span class="p">)</span> <span class="c1"># hidden state</span>
+        
+        <span class="k">return</span> <span class="p">(</span><span class="n">h_t</span><span class="p">,</span> <span class="n">c_t</span><span class="p">)</span>
+    
+<span class="k">class</span> <span class="nc">LSTM</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sequence_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LSTM</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">LSTMEncoder</span><span class="p">(</span><span class="n">feat_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">RNNDecoder</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>
+        
+    <span class="nd">@jaxtyped</span><span class="p">(</span><span class="n">typechecker</span><span class="o">=</span><span class="n">beartype</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim sequence_len feat_dim&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim output_dim&quot;</span><span class="p">]:</span>
+        <span class="n">h</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">for</span> <span class="n">seq_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">h</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="p">:],</span> <span class="n">h</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y_hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">hidden_dim</span> <span class="o">=</span> <span class="mi">1024</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LSTM</span><span class="p">(</span><span class="n">feat_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">sequence_len</span><span class="p">)</span>
+<span class="c1"># model = torch.compile(model)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="c1"># optimizer = optim.SGD(model.parameters(), lr=1e-3, momentum=0.9)</span>
+
+<span class="n">iter_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">epoch_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+    <span class="n">loss_accum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">iter_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">loss_accum</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">epoch_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_accum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+    <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">epoch_losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "77d0b9359fc34d9c8f3eae4dc2c6520d", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_char</span><span class="p">(</span><span class="n">y_hat</span><span class="p">):</span>
+    <span class="n">y_hat_cat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_idx</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_hat_cat</span><span class="p">[:,</span> <span class="n">pred_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">pred_char</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_hat_cat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_hat_cat</span><span class="p">,</span> <span class="n">pred_char</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_seq</span><span class="p">,</span> <span class="n">generated_len</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">gen_chars</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">generated_len</span><span class="p">):</span>
+            <span class="n">y_hat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)</span>
+            <span class="n">y_hat_cat</span><span class="p">,</span> <span class="n">pred_char</span> <span class="o">=</span> <span class="n">get_char</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span>
+            
+            <span class="c1"># print(input_seq.shape, y_hat_cat.shape)</span>
+            <span class="n">input_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">input_seq</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">y_hat_cat</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="n">one_idx</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="c1"># print(pred.shape)</span>
+            <span class="n">pred</span><span class="p">[:,</span> <span class="n">one_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">pred_char</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+            <span class="n">gen_chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred_char</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+            
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gen_chars</span><span class="p">)</span>
+
+<span class="c1"># input</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="mi">1200</span>
+<span class="n">try_input</span> <span class="o">=</span> <span class="n">test_inputs</span><span class="p">[</span><span class="n">idx</span><span class="p">:</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input:&quot;</span><span class="p">)</span>
+<span class="n">input_text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">try_input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_text</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Output:&quot;</span><span class="p">)</span>
+<span class="n">gen_text</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">try_input</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="mi">300</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">input_text</span> <span class="o">+</span> <span class="n">gen_text</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Input:
+ant. Inflationary co
+
+Output:
+ant. Inflationary conditions. The resulting soliton solutions can be regarded as a generalization of the method. Finally, the position of the DDA among other methods of light scattering by very large particles, like the ones that are considered in this manuscript. Current limitations and possible ways for improvement a
 </pre></div>
 </div>
 </div>
@@ -1549,7 +1753,12 @@ edina in approxistibg inctian strgenslis crmporibnt whew itecharizn pust becala 
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-with-dummy-data">Checking with dummy data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-some-training-data">Getting some training data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-training-sequences">Create training sequences</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator">Generator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-text">Generate text</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#long-short-term-memory-lstm">Long Short-Term Memory (LSTM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-lstms">Coding LSTMs</a></li>
 </ul>
 </li>
 </ul>
