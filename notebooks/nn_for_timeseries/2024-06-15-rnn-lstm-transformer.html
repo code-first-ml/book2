@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>RNN, LSTM and Transformers &#8212; Prog-ML</title>
+    <title>Encoder-Decoder Networks &#8212; Prog-ML</title>
   
   
   
@@ -95,11 +95,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/nn_for_timeseries/2024-06-15-rnn-lstm-transformer';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using PRNG key" href="../jax/introduction-jax.html" />
-    <link rel="prev" title="Problem with Expected Model Change" href="../active_learning/2022-03-06-maximal-expected-error-reduction.html" />
+    <link rel="prev" title="Code-First Machine Learning" href="../../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -190,212 +191,9 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../introduction/mle_coin.html">MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss</a></li>
-
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../probability/sample-space.html">Sample Space</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../probability/random-variable.html">Random Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../probability/pmf.html">Probability Mass Function (PMF)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal.html">Properties of RV</a></li>
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal-expectations.html">Derivations for moments of univariate normal distribution</a></li>
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-introduction.html">Multivariate Normal Distribution: Introduction</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-marginal.html">Multivariate Normal Distribution: Marginals</a></li>
-
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Inference</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../introduction/variational.html">Variational Inference from scratch in JAX</a></li>
-
-
-
-
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">MCMC</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../sampling/rejection-sampling-lr.html">Simple rejection sampling</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../sampling/Metropolis-Hastings.html">Metropolis Hastings</a></li>
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-importance-sampling.html">Importance sampling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-rejection-sampling.html">Rejection sampling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sampling/2022-02-04-sampling-normal.html">Sampling from univariate and multivariate normal distributions using Box-Muller transform</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sampling/2020-04-16-inverse-transform.html">Sampling from common distributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-05-01-gibbs-sampling.html">Gibbs sampling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">Coin tosses and MCMC</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">Bayesian ML: Fundamentals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">Bayesian linear regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">Bayesian model selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">Marginal likelihood</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">Marginal likelihood for Bayesian linear regression</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Graphical Models</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../graphical_models/2022-02-15-draw-graphical-models.html">Drawing graphical models</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mixture Models</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../mixture_models/2022-02-14-GMM.html">GMM learning</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information Theory</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../information_theory/kl-divergence.html">Understanding KL-Divergence</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Models</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../variational_models/2022-02-12-variational-inference.html">Variational Inference</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyMC</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-11-blr-pymc.html">Bayesian linear regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-12-logistic-bayesian.html">Bayesian logistic regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-03-16-GP-PyMC3.html">Gaussian process regression in PyMC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-03-17-lls-gp-pymc3.html">Local Lengthscale GP with PyMC</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Pyro</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2021-08-20-Bayesian.html">Probabilistic Programming in Pyro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022_02_17_pyro_linreg.html">Linear Regression using Pyro</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022-02-20-condition-pyro.html">Pyro Conditioning</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyTorch</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-09-pytorch-learn-normal.html">Maximum Likelihood Estimation (MLE) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-11-pytorch-learn-normal-map.html">Maximum A-Posteriori (MAP) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-17-ppca.html">Probabilstic PCA using PyTorch distributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-14-logistic-regression.html">Logistic Regression using PyTorch distributions</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Tensorflow Probability</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-26-tfp-distributions.html">Testing out some distributions in Tensorflow Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-07-coin-toss.html">Coin Toss (MLE, MAP, Fully Bayesian) in TF Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-28-tfp-linear-regression.html">Linear Regression in Tensorflow Probability</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-lr.html">Linear Regression in TF Probability using JointDistributionCoroutineAutoBatched</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-simple-dgm.html">Simple Directed Graphical Models in TF Probability</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Julia</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_julia/2021-09-01-Hello-Julia-Language.html">Linear Regression from scratch in Julia</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Gaussian Processes</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-03-26-gp.html">Some experiments in Gaussian Processes Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-15-LLS-GP.html">Local Lengthscale GP</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-15-deep-gp-from-scratch.html">Deep Kernel Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-16-ard-gp.html">Automatic relevance determination (ARD)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-04-16-GP-vs-DeepGP.html">GP v/s Deep GP on 2d data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2022-02-23-gp_rff.html">Gaussian Processes with Random Fourier Features</a></li>
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-03-29-param-learning.html">Learning Gaussian Process regression parameters using gradient descent</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2021-09-03-param-learning-sgd.html">Learning Gaussian Process regression parameters using mini-batch stochastic gradient descent</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/2020-06-26-gp-understand.html">Understanding Kernels in Gaussian Processes Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/pyro-deep-gp.html">Deep Kernel Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../gaussian_processes/pyro-binary-classification.html">GP Classification</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Regression</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../linear_regression/2022_02_21_coordinate_descent_failure.html">Coordinate descent failure example</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Adversarial Networks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../gans/2021-05-31-GAN.html">A programming introduction to GANs</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hidden Markov Models</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-06-01-hmm_simulate.html">HMM Simulation for Unfair Casino Problem</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-07-01-hmm_continuous.html">HMM Simulation for Continuous HMM</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tensor Factorization</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-19-nmf-out-matrix.html">Out of matrix non-negative matrix factorisation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-20-parafac-out-tensor.html">Out of Tensor factorisation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-08-13-mf-autograd-adagrad.html">Adagrad based matrix factorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-21-constrained-nmf-cvx.html">Constrained Non-negative matrix factorisation using CVXPY</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Neural Networks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-08-keras-neural-non-linear.html">Some Neural Network Classification</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-02-28-xor-relu-vector.html">Learning neural network for XOR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-02-linear-scratch.html">Neural Networks from scratch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2018-01-13-denoising.html">Signal denoising using RNNs in PyTorch</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Expectation Maximization</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../em/2014-06-01-em.html">Programatically understanding Expectation Maximization</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Recommender Systems</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-18-recommend-keras.html">Recommender Systems in Keras</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-29-neural-collaborative-filtering.html">Neural Networks for Collaborative Filtering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Active Learning</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../active_learning/2018-06-20-active-committee.html">Active Learning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../active_learning/2022_01_24_Query_by_Committee.html">Query by Committee</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.html">Active Learning with Bayesian Linear Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../active_learning/2022-03-06-maximal-expected-error-reduction.html">Problem with Expected Model Change</a></li>
-
-
-
-
-
-
-
-
-
-
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">NNs for Time Series</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">NNs for Time Series</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">RNN, LSTM and Transformers</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">JAX</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../jax/introduction-jax.html">Using PRNG key</a></li>
-
-
-
-
-<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2022-02-09-autograd-pytorch-jax.html">Autograd in JAX and PyTorch</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2017-08-12-linear-regression-adagrad-vs-gd.html">Programatically understanding Adagrad</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - Linear Algebra for ML</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-eigen.html">Eigen values</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-determinant.html">Determinant</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-Positive-semi-definite.html">Positive definiteness</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2022-02-11-matrix.html">Matrix as transformation and interpreting low rank matrix</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 2 - Stochastic processes</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-19-stochastic-processes.html">Stochastic processes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-17-Stationary-Time_Series.html">Stationarity of time-series stochastic process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-23-Stationarity-stochastic-processes.html">Stationarity of stochastic processes II</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../references/references.html">References</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Encoder-Decoder Networks</a></li>
 </ul>
 
     </div>
@@ -645,7 +443,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>RNN, LSTM and Transformers</h1>
+    <h1>Encoder-Decoder Networks</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -656,7 +454,17 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rnns">RNNs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-next-character-prediction">Problem: Next Character Prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent-neural-networks-rnns">Recurrent Neural Networks (RNNs)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reccurrent-equation">Reccurrent Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encoder-decoder">Encoder-Decoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-rnns">Coding RNNs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-with-dummy-data">Checking with dummy data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-some-training-data">Getting some training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-training-sequences">Create training sequences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator">Generator</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -668,36 +476,796 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="rnn-lstm-and-transformers">
-<h1>RNN, LSTM and Transformers<a class="headerlink" href="#rnn-lstm-and-transformers" title="Permalink to this headline">#</a></h1>
-<blockquote>
-<div><p>Connecting the dots between RNN, LSTM and Transformers</p>
-</div></blockquote>
-<ul class="simple">
-<li><p>toc: true</p></li>
-<li><p>badges: true</p></li>
-<li><p>comments: true</p></li>
-<li><p>author: Zeel B Patel</p></li>
-<li><p>categories: [ML]</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="encoder-decoder-networks">
+<h1>Encoder-Decoder Networks<a class="headerlink" href="#encoder-decoder-networks" title="Permalink to this headline">#</a></h1>
+<p>Author: <a class="reference external" href="https://patel-zeel.github.io/">Zeel B Patel</a></p>
 <section id="imports">
 <h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;3&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">Tensor</span>
 <span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">import</span> <span class="nn">torch.optim</span> <span class="k">as</span> <span class="nn">optim</span>
 <span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span><span class="p">,</span> <span class="n">TensorDataset</span>
+
+<span class="kn">from</span> <span class="nn">beartype</span> <span class="kn">import</span> <span class="n">beartype</span>
+<span class="kn">from</span> <span class="nn">jaxtyping</span> <span class="kn">import</span> <span class="n">Float</span><span class="p">,</span> <span class="n">jaxtyped</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="rnns">
-<h2>RNNs<a class="headerlink" href="#rnns" title="Permalink to this headline">#</a></h2>
-<p><img alt="image.png" src="https://cs231n.github.io/assets/rnn/types.png" /></p>
+<section id="problem-next-character-prediction">
+<h2>Problem: Next Character Prediction<a class="headerlink" href="#problem-next-character-prediction" title="Permalink to this headline">#</a></h2>
+<p>Before diving into the specifics, it’d be helpful to define a tiny problem (without loss of generality).</p>
+<ul class="simple">
+<li><p>Problm: Given a sequence of characters, predict the next character in the sequence.</p></li>
+<li><p>Example input: “hell”</p></li>
+<li><p>Example output: “o”</p></li>
+</ul>
+</section>
+<section id="recurrent-neural-networks-rnns">
+<h2>Recurrent Neural Networks (RNNs)<a class="headerlink" href="#recurrent-neural-networks-rnns" title="Permalink to this headline">#</a></h2>
+<p>Resource: <a class="reference external" href="https://youtu.be/yCC09vCHzF8?feature=shared">Andrej Karpathy | CS231n Winter 2016: Lecture 10: Recurrent Neural Networks, Image Captioning, LSTM</a></p>
+<p>Image source: <a class="reference external" href="https://cs231n.github.io/assets/rnn/types.png">https://cs231n.github.io/assets/rnn/types.png</a>
+<img alt="image.png" src="https://cs231n.github.io/assets/rnn/types.png" /></p>
+<section id="reccurrent-equation">
+<h3>Reccurrent Equation<a class="headerlink" href="#reccurrent-equation" title="Permalink to this headline">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+h_t = f(h_{t-1}, x_t)
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(h_t\)</span> is the hidden state at time <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(h_{t-1}\)</span> is the hidden state at time <span class="math notranslate nohighlight">\(t-1\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x_t\)</span> is the input at time <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+</ul>
+<div class="important admonition">
+<p class="admonition-title">Question</p>
+<p>But, what do we do with these hidden states? We want to predict the next character in the sequence.</p>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Answer</p>
+<p>The reccurent equation just represents the “encoder”. We need a “decoder” to predict the next character in the sequence.</p>
+</div>
+</section>
+<section id="encoder-decoder">
+<h3>Encoder-Decoder<a class="headerlink" href="#encoder-decoder" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Encoder (<span class="math notranslate nohighlight">\(f\)</span>): Encodes an input into a hidden state.</p></li>
+<li><p>Decoder (<span class="math notranslate nohighlight">\(g\)</span>): Decodes the hidden state into an output.</p></li>
+</ul>
+<div class="important admonition">
+<p class="admonition-title">Thought</p>
+<p>This looks similar to vanilla neural network with one hidden layer. The hidden layer is encoding the input and the output layer is decoding the hidden state.</p>
+</div>
+<div class="hint admonition">
+<p class="admonition-title">Answer</p>
+<p>Yes, we can generelize “Encoder-Decoder” terminology to vanilla neural networks as well.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Encoder</p></th>
+<th class="head"><p>Decoder</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Vanilla NNs</p></td>
+<td><p><span class="math notranslate nohighlight">\(h = f(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(y = g(h)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>RNNs</p></td>
+<td><p><span class="math notranslate nohighlight">\(h_t = f(h_{t-1}, x_t)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(y_t = g(h_t)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Another way?</p></td>
+<td><p><span class="math notranslate nohighlight">\(h_{t-1} = f(x_{t-1})\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(y_t = g(h_{t-1}, x_t)\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Another way is related to <a class="reference external" href="https://yanndubs.github.io/Neural-Process-Family/text/Intro.html">Neural processes</a>. Okay, back to the focus of this notebook.</p>
+</div>
+</section>
+<section id="coding-rnns">
+<h3>Coding RNNs<a class="headerlink" href="#coding-rnns" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RNNEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RNNEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_x</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">feat_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">feat_dim</span> <span class="o">*</span> <span class="n">hidden_dim</span><span class="p">))</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_h</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hidden_dim</span> <span class="o">*</span> <span class="n">hidden_dim</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">))</span>
+        
+    <span class="nd">@jaxtyped</span><span class="p">(</span><span class="n">typechecker</span><span class="o">=</span><span class="n">beartype</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim feat_dim&quot;</span><span class="p">],</span> <span class="n">h_prev</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">h_prev</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_x</span> <span class="o">+</span> <span class="n">h_prev</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_h</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    
+<span class="k">class</span> <span class="nc">RNNDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RNNDecoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hidden_dim</span> <span class="o">*</span> <span class="n">output_dim</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">output_dim</span><span class="p">))</span>
+        
+    <span class="nd">@jaxtyped</span><span class="p">(</span><span class="n">typechecker</span><span class="o">=</span><span class="n">beartype</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim hidden_dim&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim output_dim&quot;</span><span class="p">]:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">h</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+        <span class="k">return</span> <span class="n">x</span>
+    
+<span class="k">class</span> <span class="nc">RNN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">sequence_len</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RNN</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">RNNEncoder</span><span class="p">(</span><span class="n">feat_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">RNNDecoder</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sequence_len</span> <span class="o">=</span> <span class="n">sequence_len</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hidden_dim</span> <span class="o">=</span> <span class="n">hidden_dim</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim sequence_len feat_dim&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Float</span><span class="p">[</span><span class="n">Tensor</span><span class="p">,</span> <span class="s2">&quot;batch_dim feat_dim&quot;</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        
+        <span class="c1"># encode</span>
+        <span class="k">for</span> <span class="n">seq_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sequence_len</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="n">seq_idx</span><span class="p">,</span> <span class="p">:],</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+        
+        <span class="c1"># decode</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">y_hat</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="checking-with-dummy-data">
+<h3>Checking with dummy data<a class="headerlink" href="#checking-with-dummy-data" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp_batch_dim</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">tmp_feat_dim</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">tmp_output_dim</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">tmp_hidden_dim</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">tmp_sequence_len</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">tmp_batch_dim</span><span class="p">,</span> <span class="n">tmp_sequence_len</span><span class="p">,</span> <span class="n">tmp_feat_dim</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">RNN</span><span class="p">(</span><span class="n">tmp_feat_dim</span><span class="p">,</span> <span class="n">tmp_hidden_dim</span><span class="p">,</span> <span class="n">tmp_output_dim</span><span class="p">,</span> <span class="n">tmp_sequence_len</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">tmp_batch_dim</span><span class="p">,</span> <span class="n">tmp_output_dim</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="getting-some-training-data">
+<h3>Getting some training data<a class="headerlink" href="#getting-some-training-data" title="Permalink to this headline">#</a></h3>
+<p>Let’s train the model on abstracts of multiple papers.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import kaggle</span>
+
+<span class="c1"># kaggle.api.dataset_download_files(&quot;Cornell-University/arxiv&quot;, path=&quot;data&quot;, unzip=True)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/arxiv-metadata-oai-snapshot.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;abstract&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]))</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>93
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tokenizer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">vocab</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: black;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  max-height: 0;
+  max-width: 0;
+  overflow: hidden;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  max-height: 200px;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 1ex;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>OneHotEncoder(sparse_output=False)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;OneHotEncoder<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>OneHotEncoder(sparse_output=False)</pre></div> </div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 93)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-training-sequences">
+<h3>Create training sequences<a class="headerlink" href="#create-training-sequences" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sequence_len</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">abstract</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">&quot;abstract&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">abstract</span><span class="p">)</span> <span class="o">-</span> <span class="n">sequence_len</span><span class="p">):</span>
+        <span class="n">input_seq</span> <span class="o">=</span> <span class="n">abstract</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">sequence_len</span><span class="p">]</span>
+        <span class="n">output_token</span> <span class="o">=</span> <span class="n">abstract</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">sequence_len</span><span class="p">]</span>
+        <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)))</span>
+        <span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">output_token</span><span class="p">)))</span>
+        
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">outputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">inputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sequence_len</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">outputs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">outputs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "402b76293973457b89f8d9dba95c9b46", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(78641, 20) (78641, 1)
+(78641, 20, 93) (78641, 93)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">hidden_dim</span> <span class="o">=</span> <span class="mi">1024</span>
+
+<span class="n">train_inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">))]</span>
+<span class="n">train_outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">))]</span>
+<span class="n">test_inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)):]</span>
+<span class="n">test_outputs</span> <span class="o">=</span> <span class="n">outputs</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.8</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">outputs</span><span class="p">)):]</span>
+
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">train_inputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">train_outputs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">feat_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+<span class="n">output_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RNN</span><span class="p">(</span><span class="n">feat_dim</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">,</span> <span class="n">sequence_len</span><span class="p">)</span>
+<span class="c1"># model = torch.compile(model)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+
+<span class="n">iter_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">epoch_losses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+    <span class="n">loss_accum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">iter_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">loss_accum</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">epoch_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_accum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+    <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">epoch_losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "b0cd83b5c761464b9fe66c0ed1f6d19c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+    <span class="n">loss_accum</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+        <span class="n">y_hat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">iter_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+        <span class="n">loss_accum</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="n">epoch_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_accum</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">))</span>
+    <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;loss&quot;</span><span class="p">:</span> <span class="n">epoch_losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]})</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "aafb6fa8ee9b440f8064ddca3a977f3c", "version_major": 2, "version_minor": 0}</script></div>
+</div>
+</section>
+<section id="generator">
+<h3>Generator<a class="headerlink" href="#generator" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_char</span><span class="p">(</span><span class="n">y_hat</span><span class="p">):</span>
+    <span class="n">y_hat_cat</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">pred_idx</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_hat_cat</span><span class="p">[:,</span> <span class="n">pred_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">pred_char</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">y_hat_cat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_hat_cat</span><span class="p">,</span> <span class="n">pred_char</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_seq</span><span class="p">,</span> <span class="n">generated_len</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">gen_chars</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">generated_len</span><span class="p">):</span>
+            <span class="n">y_hat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_seq</span><span class="p">)</span>
+            <span class="n">y_hat_cat</span><span class="p">,</span> <span class="n">pred_char</span> <span class="o">=</span> <span class="n">get_char</span><span class="p">(</span><span class="n">y_hat</span><span class="p">)</span>
+            
+            <span class="c1"># print(input_seq.shape, y_hat_cat.shape)</span>
+            <span class="n">input_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">input_seq</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">y_hat_cat</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            
+            <span class="n">one_idx</span> <span class="o">=</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">numpy</span><span class="p">(</span><span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+            <span class="n">pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y_hat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="c1"># print(pred.shape)</span>
+            <span class="n">pred</span><span class="p">[:,</span> <span class="n">one_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">pred_char</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+            <span class="n">gen_chars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred_char</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+            
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">gen_chars</span><span class="p">)</span>
+
+<span class="c1"># input</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">try_input</span> <span class="o">=</span> <span class="n">test_inputs</span><span class="p">[</span><span class="n">idx</span><span class="p">:</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">try_input</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Output:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">generator</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">try_input</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="mi">200</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Input:
+right solitons under
+
+Output:
+edina in approxistibg inctian strgenslis crmporibnt whew itecharizn pust becala inemantwond the $imile an Paksu foundtion, finitlerans ard dousculaca. The possting of the derev. Thi s)steed s. Te  aen
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -733,22 +1301,13 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../active_learning/2022-03-06-maximal-expected-error-reduction.html"
+       href="../../intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Problem with Expected Model Change</p>
+        <p class="prev-next-title">Code-First Machine Learning</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../jax/introduction-jax.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Using PRNG key</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -769,7 +1328,17 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">Imports</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rnns">RNNs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-next-character-prediction">Problem: Next Character Prediction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurrent-neural-networks-rnns">Recurrent Neural Networks (RNNs)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reccurrent-equation">Reccurrent Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#encoder-decoder">Encoder-Decoder</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-rnns">Coding RNNs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-with-dummy-data">Checking with dummy data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-some-training-data">Getting some training data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-training-sequences">Create training sequences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator">Generator</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
