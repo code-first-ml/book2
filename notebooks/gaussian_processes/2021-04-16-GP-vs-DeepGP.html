@@ -1,0 +1,1155 @@
+
+
+<!DOCTYPE html>
+
+
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>GP v/s Deep GP on 2d data &#8212; Prog-ML</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "prog-ml/prog-ml.github.io");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/gaussian_processes/2021-04-16-GP-vs-DeepGP';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Gaussian Processes with Random Fourier Features" href="2022-02-23-gp_rff.html" />
+    <link rel="prev" title="Automatic relevance determination (ARD)" href="2021-04-16-ard-gp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/prog-ml.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../../_static/prog-ml.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Code-First Machine Learning
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduction</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/mle_coin.html">MLE, MAP and Fully Bayesian (conjugate prior and MCMC) for coin toss</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../probability/sample-space.html">Sample Space</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/random-variable.html">Random Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/pmf.html">Probability Mass Function (PMF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal.html">Properties of RV</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/univariate-normal-expectations.html">Derivations for moments of univariate normal distribution</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-introduction.html">Multivariate Normal Distribution: Introduction</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../probability/mvn-marginal.html">Multivariate Normal Distribution: Marginals</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Inference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/variational.html">Variational Inference from scratch in JAX</a></li>
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">MCMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../sampling/rejection-sampling-lr.html">Simple rejection sampling</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../sampling/Metropolis-Hastings.html">Metropolis Hastings</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-importance-sampling.html">Importance sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2021-03-10-rejection-sampling.html">Rejection sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2022-02-04-sampling-normal.html">Sampling from univariate and multivariate normal distributions using Box-Muller transform</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2020-04-16-inverse-transform.html">Sampling from common distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-05-01-gibbs-sampling.html">Gibbs sampling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sampling/2014-07-01-mcmc_coins.html">Coin tosses and MCMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-23-bayesian-ml.html">Bayesian ML: Fundamentals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-04-14-bayesian-linear-regression.html">Bayesian linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-29-bayesian-model-selection.html">Bayesian model selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-27-Marginal-Likelihood-2.html">Marginal likelihood</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml/2021-03-31-derivation-of-marginal-likelihood.html">Marginal likelihood for Bayesian linear regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Graphical Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../graphical_models/2022-02-15-draw-graphical-models.html">Drawing graphical models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mixture Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../mixture_models/2022-02-14-GMM.html">GMM learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Information Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../information_theory/kl-divergence.html">Understanding KL-Divergence</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Variational Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../variational_models/2022-02-12-variational-inference.html">Variational Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyMC</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-11-blr-pymc.html">Bayesian linear regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pymc/2021-03-12-logistic-bayesian.html">Bayesian logistic regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021-03-16-GP-PyMC3.html">Gaussian process regression in PyMC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021-03-17-lls-gp-pymc3.html">Local Lengthscale GP with PyMC</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Pyro</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2021-08-20-Bayesian.html">Probabilistic Programming in Pyro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022_02_17_pyro_linreg.html">Linear Regression using Pyro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pyro/2022-02-20-condition-pyro.html">Pyro Conditioning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-09-pytorch-learn-normal.html">Maximum Likelihood Estimation (MLE) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-11-pytorch-learn-normal-map.html">Maximum A-Posteriori (MAP) for parameters of univariate and multivariate normal distribution in PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-17-ppca.html">Probabilstic PCA using PyTorch distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_pytorch/2022-02-14-logistic-regression.html">Logistic Regression using PyTorch distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Tensorflow Probability</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-26-tfp-distributions.html">Testing out some distributions in Tensorflow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-07-coin-toss.html">Coin Toss (MLE, MAP, Fully Bayesian) in TF Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-01-28-tfp-linear-regression.html">Linear Regression in Tensorflow Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-lr.html">Linear Regression in TF Probability using JointDistributionCoroutineAutoBatched</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_tfp/2022-02-05-simple-dgm.html">Simple Directed Graphical Models in TF Probability</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Bayesian ML with Julia</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../bayesian_ml_with_julia/2021-09-01-Hello-Julia-Language.html">Linear Regression from scratch in Julia</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Gaussian Processes</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2020-03-26-gp.html">Some experiments in Gaussian Processes Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021-04-15-LLS-GP.html">Local Lengthscale GP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021-04-15-deep-gp-from-scratch.html">Deep Kernel Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021-04-16-ard-gp.html">Automatic relevance determination (ARD)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">GP v/s Deep GP on 2d data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2022-02-23-gp_rff.html">Gaussian Processes with Random Fourier Features</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="2020-03-29-param-learning.html">Learning Gaussian Process regression parameters using gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2021-09-03-param-learning-sgd.html">Learning Gaussian Process regression parameters using mini-batch stochastic gradient descent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2020-06-26-gp-understand.html">Understanding Kernels in Gaussian Processes Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyro-deep-gp.html">Deep Kernel Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyro-binary-classification.html">GP Classification</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Linear Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../linear_regression/2022_02_21_coordinate_descent_failure.html">Coordinate descent failure example</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Generative Adversarial Networks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../gans/2021-05-31-GAN.html">A programming introduction to GANs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Hidden Markov Models</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-06-01-hmm_simulate.html">HMM Simulation for Unfair Casino Problem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hmms/2013-07-01-hmm_continuous.html">HMM Simulation for Continuous HMM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tensor Factorization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-19-nmf-out-matrix.html">Out of matrix non-negative matrix factorisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-20-parafac-out-tensor.html">Out of Tensor factorisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-08-13-mf-autograd-adagrad.html">Adagrad based matrix factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tensor_factorization/2017-04-21-constrained-nmf-cvx.html">Constrained Non-negative matrix factorisation using CVXPY</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Neural Networks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-08-keras-neural-non-linear.html">Some Neural Network Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-02-28-xor-relu-vector.html">Learning neural network for XOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2020-03-02-linear-scratch.html">Neural Networks from scratch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../neural_networks/2018-01-13-denoising.html">Signal denoising using RNNs in PyTorch</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Expectation Maximization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../em/2014-06-01-em.html">Programatically understanding Expectation Maximization</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Recommender Systems</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-18-recommend-keras.html">Recommender Systems in Keras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../recommender_systems/2017-12-29-neural-collaborative-filtering.html">Neural Networks for Collaborative Filtering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Active Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2018-06-20-active-committee.html">Active Learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2022_01_24_Query_by_Committee.html">Query by Committee</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2020-04-21-active-learning-with-bayesian-linear-regression.html">Active Learning with Bayesian Linear Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../active_learning/2022-03-06-maximal-expected-error-reduction.html">Problem with Expected Model Change</a></li>
+
+
+
+
+
+
+
+
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">NNs for Time Series</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../nn_for_timeseries/2024-06-15-rnn-lstm-transformer.html">Encoder-Decoder Networks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">JAX</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../jax/introduction-jax.html">Using PRNG key</a></li>
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2022-02-09-autograd-pytorch-jax.html">Autograd in JAX and PyTorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml_softwares/2017-08-12-linear-regression-adagrad-vs-gd.html">Programatically understanding Adagrad</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 1 - Linear Algebra for ML</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-eigen.html">Eigen values</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-determinant.html">Determinant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2021-03-15-Positive-semi-definite.html">Positive definiteness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_1_-_linear_algebra_for_ml/2022-02-11-matrix.html">Matrix as transformation and interpreting low rank matrix</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendix 2 - Stochastic processes</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-19-stochastic-processes.html">Stochastic processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-17-Stationary-Time_Series.html">Stationarity of time-series stochastic process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix_2_-_stochastic_processes/2021-03-23-Stationarity-stochastic-processes.html">Stationarity of stochastic processes II</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../references/references.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/code-first-ml/book2/blob/main/notebooks/gaussian_processes/2021-04-16-GP-vs-DeepGP.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2/edit/main/notebooks/gaussian_processes/2021-04-16-GP-vs-DeepGP.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/code-first-ml/book2/issues/new?title=Issue%20on%20page%20%2Fnotebooks/gaussian_processes/2021-04-16-GP-vs-DeepGP.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/gaussian_processes/2021-04-16-GP-vs-DeepGP.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>GP v/s Deep GP on 2d data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gp-without-ard">GP without ARD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gp-with-ard">GP with ARD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-gp">Deep GP</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gp-v-s-deep-gp-on-2d-data">
+<h1>GP v/s Deep GP on 2d data<a class="headerlink" href="#gp-v-s-deep-gp-on-2d-data" title="Permalink to this headline">#</a></h1>
+<p>Author: <a class="reference external" href="https://nipunbatra.github.io/">Nipun Batra</a>, <a class="reference external" href="https://patel-zeel.github.io/">Zeel B Patel</a></p>
+<p>In this notebook, we will be comparing three models (all RBF kernel) on a simulated 2d data:</p>
+<ul class="simple">
+<li><p>GP</p></li>
+<li><p>GP with ARD</p></li>
+<li><p>Deep GP</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">GPy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pyDOE2</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="c1"># Plotting tools</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">rc</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># GPy: Gaussian processes library</span>
+<span class="kn">import</span> <span class="nn">GPy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We generate pseudo data using the following function,</p>
+<div class="math notranslate nohighlight">
+\[
+y = \frac{(x_1+2)(2-x_2^2)}{3}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">pyDOE2</span><span class="o">.</span><span class="n">doe_lhs</span><span class="o">.</span><span class="n">lhs</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">((</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span><span class="n">s</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="mi">50</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/82f1f5b13750ebdd83c1e39cf27d3f3b34322ad76ee80ece5931fb6e9ccda61b.png" src="../../_images/82f1f5b13750ebdd83c1e39cf27d3f3b34322ad76ee80ece5931fb6e9ccda61b.png" />
+</div>
+</div>
+<section id="gp-without-ard">
+<h2>GP without ARD<a class="headerlink" href="#gp-without-ard" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_2d</span> <span class="o">=</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">RBF</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lengthscale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">k_2d</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">optimize</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+.pd{
+    font-family: "Courier New", Courier, monospace !important;
+    width: 100%;
+    padding: 3px;
+}
+</style>
+
+<p class=pd>
+<b>Model</b>: GP regression<br>
+<b>Objective</b>: -5.479737333080651<br>
+<b>Number of Parameters</b>: 3<br>
+<b>Number of Optimization Parameters</b>: 3<br>
+<b>Updates</b>: True<br>
+</p>
+<style type="text/css">
+.tg  {font-family:"Courier New", Courier, monospace !important;padding:2px 3px;word-break:normal;border-collapse:collapse;border-spacing:0;border-color:#DCDCDC;margin:0px auto;width:100%;}
+.tg td{font-family:"Courier New", Courier, monospace !important;font-weight:bold;color:#444;background-color:#F7FDFA;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg th{font-family:"Courier New", Courier, monospace !important;font-weight:normal;color:#fff;background-color:#26ADE4;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg .tg-left{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:left;}
+.tg .tg-center{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:center;}
+.tg .tg-right{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:right;}
+</style>
+<table class="tg"><tr><th><b>  GP_regression.         </b></th><th><b>                value</b></th><th><b>constraints</b></th><th><b>priors</b></th></tr>
+<tr><td class=tg-left>  rbf.variance           </td><td class=tg-right>    72.28075242747792</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  rbf.lengthscale        </td><td class=tg-right>    3.382677032484262</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  Gaussian_noise.variance</td><td class=tg-right>9.922601887760885e-06</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">x_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+
+<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">)</span>
+<span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span> <span class="k">for</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X1</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">X2</span><span class="o">.</span><span class="n">ravel</span><span class="p">())])</span>
+<span class="n">Y_true</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y_pred</span><span class="p">,</span> <span class="n">Y_cov</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="n">Y_95</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Y_cov</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">mp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">Y_pred</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predictive mean, RMSE = </span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">Y_true</span><span class="p">,</span><span class="w"> </span><span class="n">Y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">);</span>
+
+<span class="n">mp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">Y_95</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predictive variance (95\% confidence)&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d7bcd2933c4a76fde21bf7921997e0a22c4dcd035f944b515205332c5ab8d8e1.png" src="../../_images/d7bcd2933c4a76fde21bf7921997e0a22c4dcd035f944b515205332c5ab8d8e1.png" />
+</div>
+</div>
+</section>
+<section id="gp-with-ard">
+<h2>GP with ARD<a class="headerlink" href="#gp-with-ard" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_2d_ARD</span> <span class="o">=</span> <span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">RBF</span><span class="p">(</span><span class="n">input_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lengthscale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">GPy</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">GPRegression</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">k_2d_ARD</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">optimize</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+.pd{
+    font-family: "Courier New", Courier, monospace !important;
+    width: 100%;
+    padding: 3px;
+}
+</style>
+
+<p class=pd>
+<b>Model</b>: GP regression<br>
+<b>Objective</b>: -6.917350273214053<br>
+<b>Number of Parameters</b>: 4<br>
+<b>Number of Optimization Parameters</b>: 4<br>
+<b>Updates</b>: True<br>
+</p>
+<style type="text/css">
+.tg  {font-family:"Courier New", Courier, monospace !important;padding:2px 3px;word-break:normal;border-collapse:collapse;border-spacing:0;border-color:#DCDCDC;margin:0px auto;width:100%;}
+.tg td{font-family:"Courier New", Courier, monospace !important;font-weight:bold;color:#444;background-color:#F7FDFA;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg th{font-family:"Courier New", Courier, monospace !important;font-weight:normal;color:#fff;background-color:#26ADE4;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg .tg-left{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:left;}
+.tg .tg-center{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:center;}
+.tg .tg-right{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:right;}
+</style>
+<table class="tg"><tr><th><b>  GP_regression.         </b></th><th><b>                 value</b></th><th><b>constraints</b></th><th><b>priors</b></th></tr>
+<tr><td class=tg-left>  rbf.variance           </td><td class=tg-right>     40.53729208947549</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  rbf.lengthscale        </td><td class=tg-right>                  (2,)</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  Gaussian_noise.variance</td><td class=tg-right>4.3169473160951275e-29</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y_pred</span><span class="p">,</span> <span class="n">Y_cov</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="n">Y_95</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Y_cov</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">mp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">Y_pred</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predictive mean, RMSE = </span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">Y_true</span><span class="p">,</span><span class="w"> </span><span class="n">Y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">);</span>
+
+<span class="n">mp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">Y_95</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predictive variance (95\% confidence)&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/bad66c26e5bb1331fe7facf781eec32809b134974f108641c08c1e5dc9799d02.png" src="../../_images/bad66c26e5bb1331fe7facf781eec32809b134974f108641c08c1e5dc9799d02.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lengthscale</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+.tg  {padding:2px 3px;word-break:normal;border-collapse:collapse;border-spacing:0;border-color:#DCDCDC;margin:0px auto;width:100%;}
+.tg td{font-family:"Courier New", Courier, monospace !important;font-weight:bold;color:#444;background-color:#F7FDFA;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg th{font-family:"Courier New", Courier, monospace !important;font-weight:normal;color:#fff;background-color:#26ADE4;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg .tg-left{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:left;}
+.tg .tg-right{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:right;}
+</style>
+<table class="tg">
+
+<tr>
+  <th><b>index</b></th>
+  <th><b>GP_regression.rbf.lengthscale</b></th>
+  <th><b>constraints</b></th><th><b>priors</b></th>
+</tr>
+<tr><td class=tg-left>  [0]  </td><td class=tg-right>                   5.80242511</td><td class=tg-left>    +ve    </td><td class=tg-left>      </td></tr>
+<tr><td class=tg-left>  [1]  </td><td class=tg-right>                   1.80657554</td><td class=tg-left>    +ve    </td><td class=tg-left>      </td></tr></div></div>
+</div>
+<p>We see that lengthscale for <span class="math notranslate nohighlight">\(x_1\)</span> is higher because of linear relationship with the output and lengthscale for <span class="math notranslate nohighlight">\(x_2\)</span> is higher due to quadratic relationship with the output.</p>
+</section>
+<section id="deep-gp">
+<h2>Deep GP<a class="headerlink" href="#deep-gp" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">deepgp</span>
+<span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">inits</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PCA&#39;</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">kernels</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">kernels</span> <span class="o">+=</span> <span class="p">[</span><span class="n">GPy</span><span class="o">.</span><span class="n">kern</span><span class="o">.</span><span class="n">RBF</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">ARD</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+    
+<span class="n">m</span> <span class="o">=</span> <span class="n">deepgp</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">DeepGP</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span><span class="n">Y</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> 
+                  <span class="n">inits</span><span class="o">=</span><span class="n">inits</span><span class="p">,</span> 
+                  <span class="n">kernels</span><span class="o">=</span><span class="n">kernels</span><span class="p">,</span> <span class="c1"># the kernels for each layer</span>
+                  <span class="n">num_inducing</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">back_constraint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+.pd{
+    font-family: "Courier New", Courier, monospace !important;
+    width: 100%;
+    padding: 3px;
+}
+</style>
+
+<p class=pd>
+<b>Model</b>: deepgp<br>
+<b>Objective</b>: 10.244507717038887<br>
+<b>Number of Parameters</b>: 45<br>
+<b>Number of Optimization Parameters</b>: 45<br>
+<b>Updates</b>: True<br>
+</p>
+<style type="text/css">
+.tg  {font-family:"Courier New", Courier, monospace !important;padding:2px 3px;word-break:normal;border-collapse:collapse;border-spacing:0;border-color:#DCDCDC;margin:0px auto;width:100%;}
+.tg td{font-family:"Courier New", Courier, monospace !important;font-weight:bold;color:#444;background-color:#F7FDFA;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg th{font-family:"Courier New", Courier, monospace !important;font-weight:normal;color:#fff;background-color:#26ADE4;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#DCDCDC;}
+.tg .tg-left{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:left;}
+.tg .tg-center{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:center;}
+.tg .tg-right{font-family:"Courier New", Courier, monospace !important;font-weight:normal;text-align:right;}
+</style>
+<table class="tg"><tr><th><b>  deepgp.                         </b></th><th><b>                value</b></th><th><b>constraints</b></th><th><b>priors</b></th></tr>
+<tr><td class=tg-left>  obslayer.inducing inputs        </td><td class=tg-right>               (4, 1)</td><td class=tg-center>           </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  obslayer.rbf.variance           </td><td class=tg-right>   23.808937388338997</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  obslayer.rbf.lengthscale        </td><td class=tg-right>    4.451925378737478</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  obslayer.Gaussian_noise.variance</td><td class=tg-right>0.0020011072507906376</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  obslayer.Kuu_var                </td><td class=tg-right>                 (4,)</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  obslayer.latent space.mean      </td><td class=tg-right>               (9, 1)</td><td class=tg-center>           </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  obslayer.latent space.variance  </td><td class=tg-right>               (9, 1)</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  layer_1.inducing inputs         </td><td class=tg-right>               (4, 2)</td><td class=tg-center>           </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  layer_1.rbf.variance            </td><td class=tg-right>    30.67508979761088</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  layer_1.rbf.lengthscale         </td><td class=tg-right>                 (2,)</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  layer_1.Gaussian_noise.variance </td><td class=tg-right>0.0012460891277525125</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+<tr><td class=tg-left>  layer_1.Kuu_var                 </td><td class=tg-right>                 (4,)</td><td class=tg-center>    +ve    </td><td class=tg-center>      </td></tr>
+</table></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Y_pred</span><span class="p">,</span> <span class="n">Y_cov</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+<span class="n">Y_95</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Y_cov</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">mp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">Y_pred</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predictive mean, RMSE = </span><span class="si">{</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">Y_true</span><span class="p">,</span><span class="w"> </span><span class="n">Y_pred</span><span class="p">,</span><span class="w"> </span><span class="n">squared</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">);</span>
+
+<span class="n">mp</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">Y_95</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Predictive variance (95\% confidence)&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c07906f0e4ab79daf666c14d2e6db05272f0d20d8d511d95ea5a2aee8f0d9777.png" src="../../_images/c07906f0e4ab79daf666c14d2e6db05272f0d20d8d511d95ea5a2aee8f0d9777.png" />
+</div>
+</div>
+<p>Not working
+Pinball_plot : <a class="github reference external" href="https://github.com/lawrennd/talks/blob/gh-pages/deepgp_tutorial.py">lawrennd/talks</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "code-first-ml/book2",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/gaussian_processes"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2021-04-16-ard-gp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Automatic relevance determination (ARD)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2022-02-23-gp_rff.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Gaussian Processes with Random Fourier Features</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gp-without-ard">GP without ARD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gp-with-ard">GP with ARD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-gp">Deep GP</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
